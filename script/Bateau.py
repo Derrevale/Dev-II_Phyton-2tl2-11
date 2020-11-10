@@ -1,4 +1,5 @@
 class Bateau:
+    """doc test"""
     bateau = {}
 
     def __init__(self, name, size, state = "actif"):
