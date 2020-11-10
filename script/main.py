@@ -32,11 +32,17 @@ def positionner_bateau(x, y, z):
     for elements in range(1, number_of_ships + 1):
         x.afficher_tableau(z)
         if elements == 1:
-            bateau = Bateau("porte-avion", 3)
+            porte_avion = Bateau("porte-avion", 3)
+            y.porte_avion = porte_avion
+            bateau = porte_avion
         elif elements == 2:
-            bateau = Bateau("torpilleur", 2)
+            torpilleur = Bateau("torpilleur", 2)
+            y.torpilleur = torpilleur
+            bateau = torpilleur
         else:
-            bateau = Bateau("croiseur", 2)
+            croiseur = Bateau("croiseur", 2)
+            y.croiseur=croiseur
+            bateau = croiseur
 
         print("Joueur {} le bateau que vous placez est le : {} avec une taille de : {}".format(y.name, bateau.ship_name,
                                                                                                bateau.ship_size))
@@ -47,6 +53,7 @@ def positionner_bateau(x, y, z):
             "Joueur {}, veuillez choisir une ligne comme point de départ pour placer le {} : ".format(y.name,
                                                                                                       bateau.ship_name)))
         bateau.position_bateau(coord_col, coord_row, bateau, z)
+    print(y.porte_avion.ship_coordinates)
     x.afficher_tableau(z)
     fin_de_tour = False
     while fin_de_tour == False:
@@ -57,12 +64,16 @@ def positionner_bateau(x, y, z):
 
 
 def debut_partie():
+    victoire=False
+
     positionner_bateau(plateau_joueur1, joueur1, list_plateau1)
     positionner_bateau(plateau_joueur2, joueur2, list_plateau2)
-    tour_de_jeu(joueur1,plateau_joueur2, list_plateau2)
-    tour_de_jeu(joueur2, plateau_joueur1, list_plateau1)
+    while victoire==False:
+        tour_de_jeu(joueur1, plateau_joueur2, list_plateau2,joueur2)
+        tour_de_jeu(joueur2, plateau_joueur1, list_plateau1,joueur1)
 
-def tour_de_jeu(x, y, z):
+
+def tour_de_jeu(x, y, z,adversaire):
     # x = joueur actuel
     # y = plateau joueur adverse
     # z = listeplateau joueur adverse
@@ -73,7 +84,7 @@ def tour_de_jeu(x, y, z):
         "Joueur : {}, Veuillez introduire la colonne : ".format(x.name))
     choix_row_joueur = int(
         input("Joueur : {}, Veuillez introduire la ligne : ".format(x.name)))
-    tir.effectuer_tir(z, choix_row_joueur, choix_col_joueur.upper())
+    tir.effectuer_tir(z, choix_row_joueur, choix_col_joueur.upper(),adversaire)
 
     y.afficher_tableau(z)
 

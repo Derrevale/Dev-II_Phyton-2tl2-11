@@ -22,12 +22,18 @@ class Bateau:
         }
         col = coordonnees_plateau[col]
         row = row + 2
-        self.ship_coordinates = [row, col]
+
         horizontal_or_vertical = input("Voulez vous le placer horizontalement ou verticalement ? (h ou v)\n\n").lower()
         if horizontal_or_vertical == "h":
             for elements in range(name_ship.ship_size):
-                plateau[name_ship.ship_coordinates[0]][name_ship.ship_coordinates[1] + elements] = "o"
+                position = [row, col+elements,"o"]
+                self.ship_coordinates.append(position)
+                plateau[name_ship.ship_coordinates[0][0]][name_ship.ship_coordinates[0][1] + elements] = "o"
+                print(position)
 
         elif horizontal_or_vertical == "v":
             for elements in range(name_ship.ship_size):
-                plateau[name_ship.ship_coordinates[0] + elements][name_ship.ship_coordinates[1]] = "o"
+                position = [row + elements, col,"o"]
+                self.ship_coordinates.append(position)
+                plateau[name_ship.ship_coordinates[0][0] + elements][name_ship.ship_coordinates[0][1]] = "o"
+                print(position)
