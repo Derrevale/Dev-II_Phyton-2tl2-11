@@ -23,20 +23,11 @@ class Bateau:
         col = coordonnees_plateau[col]
         row = row + 2
         self.ship_coordinates = [row, col]
-        horizontal_or_vertical = input("Voulez vous le placer horizontalement ou verticalement ? (h ou v)").lower()
+        horizontal_or_vertical = input("Voulez vous le placer horizontalement ou verticalement ? (h ou v)\n\n").lower()
         if horizontal_or_vertical == "h":
-            left_or_right = input("Voulez-vous le placer à droite ou à gauche? (d ou g)").lower()
-            if left_or_right == "d":
-                for elements in range(name_ship.ship_size):
-                    plateau[name_ship.ship_coordinates[0]][name_ship.ship_coordinates[1] + elements] = "o"
-            elif left_or_right == "g":
-                for elements in range(name_ship.ship_size):
-                    plateau[name_ship.ship_coordinates[0]][name_ship.ship_coordinates[1]- elements] = "o"
+            for elements in range(name_ship.ship_size):
+                plateau[name_ship.ship_coordinates[0]][name_ship.ship_coordinates[1] + elements] = "o"
+
         elif horizontal_or_vertical == "v":
-            up_or_down = input("Voulez-vous le placer en haut ou en bas?").lower()
-            if up_or_down == "h":
-                for elements in range(name_ship.ship_size):
-                    plateau[name_ship.ship_coordinates[0] - elements][name_ship.ship_coordinates[1]] = "o"
-            elif up_or_down == "b":
-                for elements in range(name_ship.ship_size):
-                    plateau[name_ship.ship_coordinates[0] + elements][name_ship.ship_coordinates[1]] = "o"
+            for elements in range(name_ship.ship_size):
+                plateau[name_ship.ship_coordinates[0] + elements][name_ship.ship_coordinates[1]] = "o"
