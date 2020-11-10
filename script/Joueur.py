@@ -1,4 +1,5 @@
 class Joueur:
+    """documentation classe joueur test"""
     name = []
 
     def __init__(self, name, board):
