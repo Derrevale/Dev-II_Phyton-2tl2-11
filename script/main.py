@@ -2,6 +2,7 @@ from script.Actions import *
 from script.Tableau import *
 from script.Joueur import *
 from script.Bateau import *
+import copy
 
 game_finished = False
 game_won = False
@@ -9,11 +10,25 @@ tour_joueur = 0
 
 plateau_joueur1 = CreerTableau()
 plateau_joueur2 = CreerTableau()
-plateau_invisible_joueur1 = CreerTableau().tableau
-plateau_invisible_joueur2 = CreerTableau().tableau
 
 list_plateau1 = plateau_joueur1.tableau
 list_plateau2 = plateau_joueur2.tableau
+
+tableau_invisible_joueur1 = []
+tableau_invisible_joueur2 = []
+
+
+def plateau_invisible_adversaire(invisible_board, board_to_copy):
+    invisible_board = copy.deepcopy(board_to_copy)
+    for elements in range(len(invisible_board)):
+        for ele in range(len(invisible_board[elements])):
+            if invisible_board[elements][ele] == "o":
+                invisible_board[elements][ele] = "~"
+    for elements in invisible_board:
+        print(elements)
+
+
+
 
 tir = Actions()
 
@@ -69,24 +84,22 @@ def debut_partie():
     positionner_bateau(plateau_joueur1, joueur1, list_plateau1)
     positionner_bateau(plateau_joueur2, joueur2, list_plateau2)
     while victoire==False:
-        tour_de_jeu(joueur1, plateau_joueur2, list_plateau2,joueur2)
-        tour_de_jeu(joueur2, plateau_joueur1, list_plateau1,joueur1)
+        tour_de_jeu(joueur1, plateau_joueur2, list_plateau2,joueur2, tableau_invisible_joueur2)
+        tour_de_jeu(joueur2, plateau_joueur1, list_plateau1,joueur1, tableau_invisible_joueur1)
 
 
-def tour_de_jeu(x, y, z,adversaire):
+def tour_de_jeu(x, y, z,adversaire, board_invisible):
     # x = joueur actuel
     # y = plateau joueur adverse
     # z = listeplateau joueur adverse
-
+    plateau_invisible_adversaire(board_invisible, z)
     print("Plateau du joueur : {}\n".format(x.name))
-    y.afficher_tableau(z)
     choix_col_joueur = input(
         "Joueur : {}, Veuillez introduire la colonne : ".format(x.name))
     choix_row_joueur = int(
         input("Joueur : {}, Veuillez introduire la ligne : ".format(x.name)))
     tir.effectuer_tir(z, choix_row_joueur, choix_col_joueur.upper(),adversaire)
 
-    y.afficher_tableau(z)
 
     print("==========================================\n"
           "==========================================\n"
