@@ -20,3 +20,4 @@ class CreerTableau:
 
     def changement_tableau(self):
         pass
+

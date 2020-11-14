@@ -92,6 +92,9 @@ def tour_de_jeu(x, y, z,adversaire, board_invisible):
     # x = joueur actuel
     # y = plateau joueur adverse
     # z = listeplateau joueur adverse
+
+    plateau_invisible_adversaire(board_invisible, z)
+    tir.coup_special(x, z)
     plateau_invisible_adversaire(board_invisible, z)
     print("Plateau du joueur : {}\n".format(x.name))
     choix_col_joueur = input(
@@ -99,6 +102,7 @@ def tour_de_jeu(x, y, z,adversaire, board_invisible):
     choix_row_joueur = int(
         input("Joueur : {}, Veuillez introduire la ligne : ".format(x.name)))
     tir.effectuer_tir(z, choix_row_joueur, choix_col_joueur.upper(),adversaire)
+    plateau_invisible_adversaire(board_invisible, z)
 
 
     print("==========================================\n"
