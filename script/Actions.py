@@ -7,7 +7,7 @@ class Actions:
     def modif_tableau(self):
         pass
 
-    def effectuer_tir(self, tab, row, col,adversaire):
+    def effectuer_tir(self, tab, rangee, col, adversaire):
         coordonnees_plateau = {
             "A": 1,
             "B": 2,
@@ -17,19 +17,19 @@ class Actions:
             "F": 6
         }
         col = coordonnees_plateau[col]
-        row = row + 2
-        if tab[row][col] == "o":
+        rangee = rangee + 2
+        if tab[rangee][col] == "o":
+            tab[rangee][col] = "@"
             print("Touché")
 
-            for elements in adversaire.porte_avion.ship_coordinates:
-                if elements[0]==col+1 and elements[1]==row:
+            for elements in adversaire.porte_avion.coordonnees_bateau:
+                if elements[0]==col+1 and elements[1]==rangee:
                     print("dans if")
-                    adversaire.porte_avion.ship_coordinates[0][2] = "X"
-                    print(adversaire.porte_avion.ship_coordinates)
+                    adversaire.porte_avion.coordonnees_bateau[0][2] = "X"
+                    print(adversaire.porte_avion.coordonnees_bateau)
         else:
             print("Raté!")
-        tab[row][col] = "X"
-
+            tab[rangee][col] = "X"
 
     def verif_position(self):
         pass
@@ -37,12 +37,12 @@ class Actions:
     def choix_action(self, x):
         roulette = ["rien", "coup vertical", "coup horizontal", "rien", "rien"]
         resultat_roulette = ""
-        if x.player_wallet >= 150:
-            roulette_choice = input(
+        if x.portefeuille_joueur >= 150:
+            choix_roulette = input(
                 "{}, Vous avez actuellement {} euros dans votre portefeuille, voulez-vous faire tourner la roulette pour"
-                " 150 euros? (o ou n) \n\n".format(x.player_name, x.player_wallet))
-            if roulette_choice == "o":
-                # x.player_wallet = x.player_wallet - 150
+                " 150 euros? (o ou n) \n\n".format(x.nom_joueur, x.portefeuille_joueur))
+            if choix_roulette == "o":
+                # x.portefeuille_joueur = x.portefeuille_joueur - 150
                 resultat_roulette = random.choice(roulette)
                 if resultat_roulette == "rien":
                     print("Dommage, vous n'avez rien gagné !")
@@ -62,21 +62,27 @@ class Actions:
             "F": 6
         }
 
-        choice = this_object.choix_action(x)
-        print(type(choice))
-        if choice != "rien":
+        choix = this_object.choix_action(x)
+        print(type(choix))
+        if choix != "rien":
             col = input(
-                "Veuillez choisir une colonne comme point de départ pour effectuer le coup spécial suivant : {} -> ".format(choice)).upper()
-            row = int(input(
-                "veuillez choisir une rangée comme point de départ pour effectuer le coup spécial suivant : {} -> ".format(choice)))
+                "Veuillez choisir une colonne comme point de départ pour effectuer le coup spécial suivant : {} -> ".format(choix)).upper()
+            rangee = int(input(
+                "veuillez choisir une rangée comme point de départ pour effectuer le coup spécial suivant : {} -> ".format(choix)))
             col = coordonnees_plateau[col]
-            row = row + 2
-            if choice == "coup horizontal":
+            rangee = rangee + 2
+            if choix == "coup horizontal":
                 print("Coup horizontal!")
                 for elements in range(3):
-                    plateau[row][col + elements] = "x"
+                    if plateau[rangee][col + elements] == "o":
+                        plateau[rangee][col + elements] = "@"
+                    else:
+                        plateau[rangee][col + elements] = "x"
 
-            elif choice == "coup vertical":
+            elif choix == "coup vertical":
                 print("coup vertical !")
                 for elements in range(3):
-                    plateau[row + elements][col] = "x"
+                    if plateau[rangee + elements][col] == "o":
+                        plateau[rangee + elements][col] = "@"
+                    else:
+                        plateau[rangee + elements][col] = "x"

@@ -2,10 +2,10 @@ class Joueur:
     """documentation classe joueur test"""
 
     def __init__(self, name, board, wallet_amount=150):
-        self.player_name = name
-        self.player_board = board
-        self.player_wallet = wallet_amount
+        self.nom_joueur = name
+        self.plateau_joueur = board
+        self.portefeuille_joueur = wallet_amount
 
     @property
     def name(self):
-        return self.player_name
+        return self.nom_joueur
