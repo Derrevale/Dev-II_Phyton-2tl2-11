@@ -1,4 +1,4 @@
-#Projet Python 2020-2021 Développement informatique II - Bataille navale
+# Projet Python 2020-2021 Développement informatique II - Bataille navale
 
 **ÉtudiantS :** Derreumaux Valentin HE201579, Volont Sébastien HE201833
                
