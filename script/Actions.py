@@ -36,7 +36,7 @@ class Actions:
         pass
 
     def choix_action(self, x):
-        roulette = ["rien", "coup vertical", "coup horizontal", "rien", "rien"]
+        roulette = ["coup vertical"]
         resultat_roulette = ""
         if x.portefeuille_joueur >= 150:
             choix_roulette = input(

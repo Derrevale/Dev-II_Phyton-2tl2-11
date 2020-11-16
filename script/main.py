@@ -35,7 +35,7 @@ nom_joueur2 = input("Joueur 2, veuillez introduire votre nom : ")
 
 joueur1 = Joueur(nom_joueur1, plateau_joueur1)
 joueur2 = Joueur(nom_joueur2, plateau_joueur2)
-number_of_ships = 1
+number_of_ships = 3
 
 
 def positionner_bateau(x, y, z):
@@ -87,15 +87,11 @@ def positionner_bateau(x, y, z):
             fin_de_tour = True
 
 
-def verif_bateau(x, y, z, nom_du_bateau):
-    # x = plateau_joueur1 ou plateau_joueur2
-    # y = joueur_1 ou 2
-    # z = listeplateau 1 ou 2
+def verif_bateau(nom_du_bateau, x):
     counter = []
     for elements in range(nom_du_bateau.taille_bateau):
         if nom_du_bateau.etat_bateau == "inactif":
             print("ce bateau a déjà été détruit")
-            print(y.portefeuille_joueur)
             break
         if nom_du_bateau.coordonnees_bateau[elements][2] == "@":
             print("{} est endommagé".format(nom_du_bateau.nom_bateau))
@@ -103,34 +99,25 @@ def verif_bateau(x, y, z, nom_du_bateau):
             if len(counter) == nom_du_bateau.taille_bateau:
                 nom_du_bateau.etat_bateau = "inactif"
                 if nom_du_bateau.etat_bateau == "inactif":
-                    y.portefeuille_joueur = y.portefeuille_joueur + 150
-                    print(y.portefeuille_joueur)
+                    x.portefeuille_joueur = x.portefeuille_joueur + 150
+                    print(x.portefeuille_joueur)
                 else:
                     print("pas encore")
     print("L'état du bateau {} est le suivant : {} ".format(nom_du_bateau.nom_bateau, nom_du_bateau.etat_bateau))
 
 
-def rafraichir_position(x, y, z):
-    print(x)
-    print(y)
-    print(y)
-    print(y.porte_avion.coordonnees_bateau)
-    for elements in range(y.porte_avion.taille_bateau):
-        col = y.porte_avion.coordonnees_bateau[elements][1]
-        rangee = y.porte_avion.coordonnees_bateau[elements][0]
+def rafraichir_position(z, nom_du_bateau):
+    for elements in range(nom_du_bateau.taille_bateau):
+        col = nom_du_bateau.coordonnees_bateau[elements][1]
+        rangee = nom_du_bateau.coordonnees_bateau[elements][0]
         if z[rangee][col] == "@":
-            y.porte_avion.coordonnees_bateau[elements][2] = "@"
-    print(y.porte_avion.coordonnees_bateau)
-    # if porte_avion.etat_bateau and croiseur.etat_bateau and torpilleur.etat_bateau == "inactif":
-    #     print("PARTIE FINIE")
-    #     victoire = True
+            nom_du_bateau.coordonnees_bateau[elements][2] = "@"
+    print(nom_du_bateau.coordonnees_bateau)
 
 
 def verif_win(y):
-    # x = plateau_joueur1 ou plateau_joueur2
     # y = joueur_1 ou 2
-    # z = listeplateau 1 ou 2
-    if y.porte_avion.etat_bateau == "inactif":
+    if y.porte_avion.etat_bateau and y.torpilleur.etat_bateau and y.croiseur.etat_bateau== "inactif":
         return True
 
 
@@ -142,37 +129,37 @@ def debut_partie():
     print(joueur2.porte_avion.coordonnees_bateau)
 
     while victoire == False:
+        print("plateau du joueur 2 : \n")
         tour_de_jeu(joueur1, plateau_joueur2, liste_plateau2, joueur2, tableau_invisible_joueur2)
-        rafraichir_position(plateau_joueur2, joueur2, liste_plateau2)
-        # verif_bateau(plateau_joueur2, joueur2, liste_plateau2, porte_avion)
-        # rafraichir_position(plateau_joueur2, joueur2, liste_plateau2, torpilleur)
-        # verif_bateau(plateau_joueur2, joueur2, liste_plateau2, torpilleur)
-        # rafraichir_position(plateau_joueur2, joueur2, liste_plateau2, croiseur)
-        # verif_bateau(plateau_joueur2, joueur2, liste_plateau2, croiseur)
+        rafraichir_position(liste_plateau2, joueur2.porte_avion)
+        verif_bateau(joueur2.porte_avion, joueur1)
+        rafraichir_position(liste_plateau2, joueur2.torpilleur)
+        verif_bateau(joueur2.torpilleur, joueur1)
+        rafraichir_position(liste_plateau2, joueur2.croiseur)
+        verif_bateau(joueur2.croiseur, joueur1)
 
+        print("plateau du joueur 1 : \n")
         tour_de_jeu(joueur2, plateau_joueur1, liste_plateau1, joueur1, tableau_invisible_joueur1)
-        rafraichir_position(plateau_joueur1, joueur1, liste_plateau1)
-        # verif_bateau(plateau_joueur1, joueur1, liste_plateau1, porte_avion)
-        # rafraichir_position(plateau_joueur1, joueur1, liste_plateau1, torpilleur)
-        # verif_bateau(plateau_joueur1, joueur1, liste_plateau1, torpilleur)
-        # rafraichir_position(plateau_joueur1, joueur1, liste_plateau1, croiseur)
-        # verif_bateau(plateau_joueur1, joueur1, liste_plateau1, croiseur)
+        rafraichir_position(liste_plateau1, joueur1.porte_avion)
+        verif_bateau(joueur1.porte_avion, joueur2)
+        rafraichir_position(liste_plateau1, joueur1.torpilleur)
+        verif_bateau(joueur1.torpilleur, joueur2)
+        rafraichir_position(liste_plateau1, joueur1.croiseur)
+        verif_bateau(joueur1.croiseur, joueur2)
 
         if verif_win(joueur2) == True:
             victoire = True
-            print("test numéro 1")
+            print("le joueur 1 a gagné")
 
         if verif_win(joueur1) == True:
             victoire = True
-            print("test numéro 2")
+            print("le joueur 2 a gagné")
 
 
 def tour_de_jeu(x, y, z, adversaire, plateau_invisible):
     # x = joueur actuel
-    # y = plateau joueur adverse
     # z = listeplateau joueur adverse
 
-    print("Plateau du joueur : {}\n".format(x.nom))
     while True:
         try:
             plateau_invisible_adversaire(plateau_invisible, z)
