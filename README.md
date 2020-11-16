@@ -6,6 +6,8 @@
 
 **Cours à présenter :** « Développement informatique II » (Q1)
 
+**Langage utilisé : Python (3.8)
+
 
 **Description du projet:**
 Nous avons comme but de créer un projet en python de type Jeu vidéo.
