@@ -13,6 +13,8 @@ Un bateau coule si l’ensemble de ses cases le représentant ont été touchée
 Nous y effectuerons des ajouts supplémentaires tel que :
 *	La possibilité d’effectuer des coups spéciaux. (Lignes horizontales, verticales, zone carrées…)
 *	Mettre en place un système d’économie permettant de faire tourner une roulette contenant les tirs spéciaux.
+
 Bonus : 
+
 *	L’implémentation d’un système de rang et de classement via un serveur ou une DB.
 *	Ajout d’une interface graphique.
