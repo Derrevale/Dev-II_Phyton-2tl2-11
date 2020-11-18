@@ -3,14 +3,23 @@ from script.Tableau import *
 from script.Joueur import *
 from script.Bateau import *
 import copy
+from script.outils import *
 
 partie_finie = False
 partie_gagnee = False
 tour_joueur = 0
 
-plateau_joueur1 = CreerTableau(5,5)
+nom_joueur1 = nom_de_joueur(1)
+nom_joueur2 = nom_de_joueur(2)
+
+
+ligne_MAX = attribution_COLONNE_tableau()
+colonne_MAX = attribution_LIGNE_tableau()
+
+plateau_joueur1 = CreerTableau(colonne_MAX,ligne_MAX)
 plateau_joueur1.creation_tableau()
-plateau_joueur2 = CreerTableau(5,5)
+plateau_joueur2 = CreerTableau(colonne_MAX,ligne_MAX)
+plateau_joueur2.creation_tableau()
 
 liste_plateau1 = plateau_joueur1.tableau
 liste_plateau2 = plateau_joueur2.tableau
@@ -31,8 +40,7 @@ def plateau_invisible_adversaire(plateau_invisible, plateau_a_copier):
 
 tir = Actions()
 
-nom_joueur1 = input("Joueur 1, veuillez introduire votre nom : ")
-nom_joueur2 = input("Joueur 2, veuillez introduire votre nom : ")
+
 
 joueur1 = Joueur(nom_joueur1, plateau_joueur1)
 joueur2 = Joueur(nom_joueur2, plateau_joueur2)
