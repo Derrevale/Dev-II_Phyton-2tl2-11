@@ -9,6 +9,7 @@ partie_finie = False
 partie_gagnee = False
 tour_joueur = 0
 
+
 nom_joueur1 = nom_de_joueur(1)
 nom_joueur2 = nom_de_joueur(2)
 
@@ -18,8 +19,11 @@ colonne_MAX = attribution_LIGNE_tableau()
 
 plateau_joueur1 = CreerTableau(colonne_MAX,ligne_MAX)
 plateau_joueur1.creation_tableau()
+
 plateau_joueur2 = CreerTableau(colonne_MAX,ligne_MAX)
 plateau_joueur2.creation_tableau()
+
+number_of_ships = attribution_NOMBRE_bateau()
 
 liste_plateau1 = plateau_joueur1.tableau
 liste_plateau2 = plateau_joueur2.tableau
@@ -44,7 +48,7 @@ tir = Actions()
 
 joueur1 = Joueur(nom_joueur1, plateau_joueur1)
 joueur2 = Joueur(nom_joueur2, plateau_joueur2)
-number_of_ships = 3
+
 
 
 def positionner_bateau(x, y, z):
