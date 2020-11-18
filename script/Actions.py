@@ -17,7 +17,7 @@ class Actions:
             "F": 6
         }
         col = coordonnees_plateau[col]
-        rangee = rangee + 2
+        rangee = rangee + 1
         if tab[rangee][col] == "o":
             tab[rangee][col] = "@"
             print("Touché")
@@ -25,6 +25,7 @@ class Actions:
                 if elements[0] == col+1 and elements[1] == rangee:
                     print("dans if")
                     adversaire.porte_avion.coordonnees_bateau[0][2] = "X"
+                    adversaire.porte_avion.etat_bateau="Touché"
                     print(adversaire.porte_avion.coordonnees_bateau)
         elif tab[rangee][col] == "@":
             tab[rangee][col] = "@"

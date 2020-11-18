@@ -20,7 +20,7 @@ class Bateau:
             "F": 6
         }
         col = coordonnees_plateau[col]
-        rangee = rangee + 2
+        rangee = rangee + 1
 
         horizontal_ou_vertical = input("Voulez vous le placer horizontalement ou verticalement ? (h ou v)\n\n").lower()
         if horizontal_ou_vertical == "h":
