@@ -8,8 +8,9 @@ partie_finie = False
 partie_gagnee = False
 tour_joueur = 0
 
-plateau_joueur1 = CreerTableau()
-plateau_joueur2 = CreerTableau()
+plateau_joueur1 = CreerTableau(5,5)
+plateau_joueur1.creation_tableau()
+plateau_joueur2 = CreerTableau(5,5)
 
 liste_plateau1 = plateau_joueur1.tableau
 liste_plateau2 = plateau_joueur2.tableau
