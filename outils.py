@@ -1,15 +1,13 @@
-from script.Tableau import *
-from script.Actions import *
+from tableau import *
+from action import *
 import copy
 
-tir = Actions()
 
 
 def nom_de_joueur(x):
     # Fonction d'attribution des noms
     nom_joueur = input("\nJoueur " + str(x) + ", veuillez introduire votre nom : ")
     return nom_joueur
-
 
 def attribution_COLONNE_tableau():
     # Fonction d'attribution du nombre de colonne max
@@ -68,13 +66,12 @@ def tour_de_jeu(x, y, z, adversaire, plateau_invisible):
     while True:
         try:
             plateau_invisible_adversaire(plateau_invisible, z)
-            tir.coup_special(x, z)
             plateau_invisible_adversaire(plateau_invisible, z)
             choix_col_joueur = input(
                 "Joueur : {}, Veuillez introduire la colonne : ".format(x.nom))
             choix_rangee_joueur = int(
                 input("Joueur : {}, Veuillez introduire la ligne : ".format(x.nom)))
-            tir.effectuer_tir(z, choix_rangee_joueur, choix_col_joueur.upper(), adversaire)
+            effectuer_tir(z, choix_rangee_joueur, choix_col_joueur.upper(), adversaire)
         except KeyError:
             print("Erreur, veuillez introduire des coordonnées valides\n")
             continue
@@ -182,7 +179,6 @@ def verif_win(y,number_of_ship):
     elif number_of_ship == 1:
         if y.porte_avion.etat_bateau == "inactif":
             return True
-
 
 def debut_partie(plateau_joueur1, joueur1, liste_plateau1,
                  plateau_joueur2, joueur2, liste_plateau2,
