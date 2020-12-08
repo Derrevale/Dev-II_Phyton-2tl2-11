@@ -153,11 +153,11 @@ def tour_de_jeu(joueur_actuel, adversaire, plateau_invisible):
 
 
 def positionner_bateau(joueur, number_of_ships):
-    print(number_of_ships)
+
     for elements in range(1, number_of_ships + 1):
         afficher_tableau(joueur.plateau_joueur.tableau)
         if elements == 1:
-            porte_avion = Bateau("porte-avion", 3)
+            porte_avion = Bateau("porte-avion", 4)
             joueur.porte_avion = porte_avion
             joueur.nom_des_bateaux.append("porte-avion")
             bateau = porte_avion
@@ -167,15 +167,29 @@ def positionner_bateau(joueur, number_of_ships):
             joueur.torpilleur = torpilleur
             joueur.nom_des_bateaux.append("torpilleur")
             bateau = torpilleur
+
         elif elements == 3:
             croiseur = Bateau("croiseur", 2)
             joueur.croiseur = croiseur
             joueur.nom_des_bateaux.append("croiseur")
             bateau = croiseur
+
+        elif elements == 4:
+            canonniere = Bateau("canonniere", 3)
+            joueur.Canonniere = canonniere
+            joueur.nom_des_bateaux.append("canonniere")
+            bateau = canonniere
+        elif elements == 5:
+            destroyer = Bateau("destroyer", 3)
+            joueur.destroyer = destroyer
+            joueur.nom_des_bateaux.append("destroyer")
+            bateau = destroyer
+
         print("Joueur {} le bateau que vous placez est le : {} avec une taille de : {}".format(joueur.nom,
                                                                                                bateau.nom_bateau,
                                                                                                bateau.taille_bateau))
         while True:
+
             try:
                 coord_col = input(
                     "Joueur {}, veuillez choisir une colonne comme point de départ pour placer le {} : ".format(
@@ -185,7 +199,14 @@ def positionner_bateau(joueur, number_of_ships):
                     "Joueur {}, veuillez choisir une ligne comme point de départ pour placer le {} : ".format(
                         joueur.nom,
                         bateau.nom_bateau)))
-                bateau.position_bateau(coord_col, coord_rangee, bateau, joueur.plateau_joueur.tableau)
+                horizontal_ou_vertical = input(
+                    "Voulez vous le placer horizontalement ou verticalement ? (h ou v)\n\n").lower()
+
+                bateau.position_bateau_verif(coord_col, coord_rangee, bateau, joueur.plateau_joueur.tableau,horizontal_ou_vertical)
+            except IndexError:
+                print("Erreur, veuillez introduire des coordonnées valides\n")
+            except ZeroDivisionError:
+                print("Erreur, veuillez introduire des coordonnées valides\n")
             except KeyError:
                 print("Erreur, veuillez introduire des coordonnées valides\n")
                 continue
@@ -193,9 +214,14 @@ def positionner_bateau(joueur, number_of_ships):
                 print("Erreur, veuillez introduire des coordonnées valides\n")
                 continue
             else:
+                print(coord_col)
+                bateau.position_bateau(coord_col, coord_rangee, bateau, joueur.plateau_joueur.tableau,
+                                       horizontal_ou_vertical)
+
                 break
-    print(joueur.nom_joueur)
-    print(joueur.porte_avion.coordonnees_bateau)
+
+    afficher_tableau(joueur.plateau_joueur.tableau)
+
     fin_de_tour = False
     while fin_de_tour == False:
         print("Votre tour est fini , le joueur suivant peut s'installer devant l'ordinateur...\n\n\n")
@@ -309,18 +335,17 @@ def verif_grande_partie(joueur1, joueur2,
                     tableau_invisible_joueur1, tableau_invisible_joueur2,
                     ):
     print("plateau du joueur 2 : \n")
-    tour_de_jeu(joueur1, joueur2, joueur2.plateau_joueur, tableau_invisible_joueur2)
-    rafraichir_position(joueur2, joueur2.porte_avion)
-    verif_bateau(joueur2.porte_avion, joueur1)
-    rafraichir_position(joueur2, joueur2.torpilleur)
-    verif_bateau(joueur2.torpilleur, joueur1)
+
+    tour_de_jeu(joueur1, joueur2, tableau_invisible_joueur2)
+
+    rafraichir_position(joueur2, joueur2.porte_avion, joueur2.torpilleur, joueur2.croiseur, joueur2.cannoniere, joueur2.destroyer)
+    verif_bateau(joueur1, joueur2.porte_avion, joueur2.torpilleur, joueur2.croiseur, joueur2.cannoniere, joueur2.destroyer)
 
     print("plateau du joueur 1 : \n")
-    tour_de_jeu(joueur2, joueur1, joueur1.plateau_joueur, tableau_invisible_joueur1)
-    rafraichir_position(joueur1, joueur1.porte_avion)
-    verif_bateau(joueur1.porte_avion, joueur2)
-    rafraichir_position(joueur1, joueur1.torpilleur)
-    verif_bateau(joueur1.torpilleur, joueur2)
+    tour_de_jeu(joueur2, joueur1, tableau_invisible_joueur1)
+
+    rafraichir_position(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur, joueur1.cannoniere, joueur1.destroyer)
+    verif_bateau(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur, joueur1.cannoniere, joueur1.destroyer)
 
 
 
