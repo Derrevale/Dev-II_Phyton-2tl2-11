@@ -204,34 +204,35 @@ def positionner_bateau(joueur, number_of_ships):
             fin_de_tour = True
 
 
-def verif_bateau(nom_du_bateau, x):
+def verif_bateau(joueur_actuel,*arg ):
     counter = []
-    for elements in range(nom_du_bateau.taille_bateau):
-        if nom_du_bateau.etat_bateau == "inactif":
-            print("ce bateau a déjà été détruit")
-            break
-        if nom_du_bateau.coordonnees_bateau[elements][2] == "@":
-            print("{} est endommagé".format(nom_du_bateau.nom_bateau))
-            counter.append("@")
-            nom_du_bateau.etat_bateau = "Touché"
-            if len(counter) == nom_du_bateau.taille_bateau:
-                nom_du_bateau.etat_bateau = "inactif"
-                if nom_du_bateau.etat_bateau == "inactif":
-                    x.portefeuille_joueur = x.portefeuille_joueur + 150
-                    print(x.portefeuille_joueur)
-                else:
-                    print("pas encore")
-    print("L'état du bateau {} est le suivant : {} ".format(nom_du_bateau.nom_bateau, nom_du_bateau.etat_bateau))
+    for nom_du_bateau in arg:
+        for elements in range(nom_du_bateau.taille_bateau):
+            if nom_du_bateau.etat_bateau == "inactif":
+                print("ce bateau a déjà été détruit")
+                break
+            if nom_du_bateau.coordonnees_bateau[elements][2] == "@":
+                print("{} est endommagé".format(nom_du_bateau.nom_bateau))
+                counter.append("@")
+                nom_du_bateau.etat_bateau = "Touché"
+                if len(counter) == nom_du_bateau.taille_bateau:
+                    nom_du_bateau.etat_bateau = "inactif"
+                    if nom_du_bateau.etat_bateau == "inactif":
+                        joueur_actuel.portefeuille_joueur = joueur_actuel.portefeuille_joueur + 150
+                        print(joueur_actuel.portefeuille_joueur)
+                    else:
+                        print("pas encore")
+        print("L'état du bateau {} est le suivant : {} ".format(nom_du_bateau.nom_bateau, nom_du_bateau.etat_bateau))
 
 
-def rafraichir_position(adversaire, nom_du_bateau):
-    #OPTIMISABLE EN PRENANT *ARG ET EN BOUCLANT SUR ARG EN FAISANT LE FOR EN MODE range(arg[i].taille bateau):--------------------------------------------
-    for elements in range(nom_du_bateau.taille_bateau):
-        col = nom_du_bateau.coordonnees_bateau[elements][1]
-        rangee = nom_du_bateau.coordonnees_bateau[elements][0]
-        if adversaire.plateau_joueur.tableau[rangee][col] == "@":
-            nom_du_bateau.coordonnees_bateau[elements][2] = "@"
-    print(nom_du_bateau.coordonnees_bateau)
+def rafraichir_position(adversaire, *arg):
+    for nom_du_bateau in arg:
+        for elements in range(nom_du_bateau.taille_bateau):
+            col = nom_du_bateau.coordonnees_bateau[elements][1]
+            rangee = nom_du_bateau.coordonnees_bateau[elements][0]
+            if adversaire.plateau_joueur.tableau[rangee][col] == "@":
+                nom_du_bateau.coordonnees_bateau[elements][2] = "@"
+        print(nom_du_bateau.coordonnees_bateau)
 
 
 def verif_win(y, number_of_ship):
@@ -291,26 +292,17 @@ def verif_petite_partie(joueur1,
 
     tour_de_jeu(joueur1, joueur2, tableau_invisible_joueur2)
 
-    rafraichir_position(joueur2, joueur2.porte_avion)
-    verif_bateau(joueur2.porte_avion, joueur1)
+    rafraichir_position(joueur2, joueur2.porte_avion, joueur2.torpilleur, joueur2.croiseur)
+    verif_bateau(joueur1, joueur2.porte_avion, joueur2.torpilleur, joueur2.croiseur)
 
-    rafraichir_position(joueur2, joueur2.torpilleur)
-    verif_bateau(joueur2.torpilleur, joueur1)
 
-    rafraichir_position(joueur2, joueur2.croiseur)
-    verif_bateau(joueur2.croiseur, joueur1)
 
     print("plateau du joueur 1 : \n")
     tour_de_jeu(joueur2, joueur1, tableau_invisible_joueur1)
 
-    rafraichir_position(joueur1, joueur1.porte_avion)
-    verif_bateau(joueur1.porte_avion, joueur2)
+    rafraichir_position(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur)
+    verif_bateau(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur)
 
-    rafraichir_position(joueur1, joueur1.torpilleur)
-    verif_bateau(joueur1.torpilleur, joueur2)
-
-    rafraichir_position(joueur1, joueur1.croiseur)
-    verif_bateau(joueur1.croiseur, joueur2)
 
 
 def verif_grande_partie(joueur1, joueur2,
