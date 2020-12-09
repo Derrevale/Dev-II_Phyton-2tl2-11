@@ -1,16 +1,16 @@
 class Bateau:
 
-    def __init__(self, nom, taille, etat="actif"):
+    def __init__(self, nom: str, taille :int, etat="actif"):
         self.nom_bateau = nom
         self.coordonnees_bateau = []
         self.etat_bateau = etat
         self.taille_bateau = taille
         self.emplacement = False
 
-
     def modifier_tableau(self):
         pass
-    def position_bateau_verif(self, col, rangee, nom_navire, plateau,orientation):
+
+    def position_bateau_verif(self, col: int, rangee: int, nom_navire: str, plateau: list, orientation: str):
         coordonnees_plateau = {
             "A": 1,
             "B": 2,
@@ -26,13 +26,11 @@ class Bateau:
         col = coordonnees_plateau[col]
         rangee = rangee + 1
 
-
-
         if orientation == "h":
             for elements in range(nom_navire.taille_bateau):
-                if plateau[rangee][col+elements] == "o":
+                if plateau[rangee][col + elements] == "o":
                     print("supperposition de bateau")
-                    lance_error=1/0
+                    lance_error = 1 / 0
 
 
 
@@ -43,9 +41,7 @@ class Bateau:
                     print("erreur superposition de 2 bateaux")
                     lance_error = 1 / 0
 
-
-
-    def position_bateau(self, col, rangee, nom_navire, plateau,orientation):
+    def position_bateau(self, col: int, rangee: int, nom_navire: str, plateau: list, orientation: str):
         coordonnees_plateau = {
             "A": 1,
             "B": 2,
@@ -59,7 +55,7 @@ class Bateau:
 
         if orientation == "h":
             for elements in range(nom_navire.taille_bateau):
-                position = [rangee, col+elements, "o"]
+                position = [rangee, col + elements, "o"]
                 self.coordonnees_bateau.append(position)
                 plateau[nom_navire.coordonnees_bateau[0][0]][nom_navire.coordonnees_bateau[0][1] + elements] = "o"
                 print(position)
