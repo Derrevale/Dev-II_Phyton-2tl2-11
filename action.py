@@ -55,18 +55,18 @@ def selection_nombre_bateau(x: int):
     return nombre_bateau
 
 
-def afficher_tableau(tableau):
+def afficher_tableau(tableau: list):
     for elements in tableau:
         print(elements)
 
 
-def creation_tableau_joueur(dimension, nom_joueur):
+def creation_tableau_joueur(dimension: int, nom_joueur: str):
     plateau_joueur = CreerTableau(dimension)
     plateau_joueur.creation_tableau()
     return Joueur(nom_joueur, plateau_joueur)
 
 
-def effectuer_tir(rangee, col, adversaire):
+def effectuer_tir(rangee: int, col: int, adversaire: object):
     coordonnees_plateau = {
         "A": 1,
         "B": 2,
@@ -97,13 +97,13 @@ def effectuer_tir(rangee, col, adversaire):
         adversaire.plateau_joueur.tableau[rangee][col] = "X"
 
 
-def choix_action(self, x):
+def choix_action(joueur_actu: object):
     roulette = ["coup vertical"]
     resultat_roulette = ""
-    if x.portefeuille_joueur >= 150:
+    if joueur_actu.portefeuille_joueur >= 150:
         choix_roulette = input(
             "{}, Vous avez actuellement {} euros dans votre portefeuille, voulez-vous faire tourner la roulette pour"
-            " 150 euros? (o ou n) \n\n".format(x.nom_joueur, x.portefeuille_joueur))
+            " 150 euros? (o ou n) \n\n".format(joueur_actu.nom_joueur, joueur_actu.portefeuille_joueur))
         if choix_roulette == "o":
             # x.portefeuille_joueur = x.portefeuille_joueur - 150
             resultat_roulette = random.choice(roulette)
@@ -116,7 +116,7 @@ def choix_action(self, x):
     return resultat_roulette
 
 
-def plateau_invisible_adversaire(plateau_invisible, plateau_a_copier):
+def plateau_invisible_adversaire(plateau_invisible: list, plateau_a_copier: list):
     plateau_invisible = copy.deepcopy(plateau_a_copier)
     for elements in range(len(plateau_invisible)):
         for ele in range(len(plateau_invisible[elements])):
@@ -126,8 +126,7 @@ def plateau_invisible_adversaire(plateau_invisible, plateau_a_copier):
         print(elements)
 
 
-def tour_de_jeu(joueur_actuel, adversaire, plateau_invisible):
-
+def tour_de_jeu(joueur_actuel: object, adversaire: object, plateau_invisible: list):
     while True:
         try:
 
@@ -152,8 +151,7 @@ def tour_de_jeu(joueur_actuel, adversaire, plateau_invisible):
           "==========================================\n")
 
 
-def positionner_bateau(joueur, number_of_ships):
-
+def positionner_bateau(joueur: object, number_of_ships: int):
     for elements in range(1, number_of_ships + 1):
         afficher_tableau(joueur.plateau_joueur.tableau)
         if elements == 1:
@@ -202,7 +200,8 @@ def positionner_bateau(joueur, number_of_ships):
                 horizontal_ou_vertical = input(
                     "Voulez vous le placer horizontalement ou verticalement ? (h ou v)\n\n").lower()
 
-                bateau.position_bateau_verif(coord_col, coord_rangee, bateau, joueur.plateau_joueur.tableau,horizontal_ou_vertical)
+                bateau.position_bateau_verif(coord_col, coord_rangee, bateau, joueur.plateau_joueur.tableau,
+                                             horizontal_ou_vertical)
             except IndexError:
                 print("Erreur, veuillez introduire des coordonnées valides\n")
             except ZeroDivisionError:
@@ -230,7 +229,7 @@ def positionner_bateau(joueur, number_of_ships):
             fin_de_tour = True
 
 
-def verif_bateau(joueur_actuel,*arg ):
+def verif_bateau(joueur_actuel: object, *arg):
     counter = []
     for nom_du_bateau in arg:
         for elements in range(nom_du_bateau.taille_bateau):
@@ -251,7 +250,7 @@ def verif_bateau(joueur_actuel,*arg ):
         print("L'état du bateau {} est le suivant : {} ".format(nom_du_bateau.nom_bateau, nom_du_bateau.etat_bateau))
 
 
-def rafraichir_position(adversaire, *arg):
+def rafraichir_position(adversaire: object, *arg):
     for nom_du_bateau in arg:
         for elements in range(nom_du_bateau.taille_bateau):
             col = nom_du_bateau.coordonnees_bateau[elements][1]
@@ -261,21 +260,21 @@ def rafraichir_position(adversaire, *arg):
         print(nom_du_bateau.coordonnees_bateau)
 
 
-def verif_win(y, number_of_ship):
+def verif_win(joueur: object, number_of_ship: int):
     # y = joueur_1 ou 2
     if number_of_ship == 3:
-        if y.porte_avion.etat_bateau and y.torpilleur.etat_bateau and y.croiseur.etat_bateau == "inactif":
+        if joueur.porte_avion.etat_bateau and joueur.torpilleur.etat_bateau and joueur.croiseur.etat_bateau == "inactif":
             return True
     elif number_of_ship == 2:
-        if y.porte_avion.etat_bateau and y.torpilleur.etat_bateau == "inactif":
+        if joueur.porte_avion.etat_bateau and joueur.torpilleur.etat_bateau == "inactif":
             return True
     elif number_of_ship == 1:
-        if y.porte_avion.etat_bateau == "inactif":
+        if joueur.porte_avion.etat_bateau == "inactif":
             return True
 
 
-def debut_partie(joueur1 :object, joueur2 :object,
-                 tableau_invisible_joueur1 :list, tableau_invisible_joueur2 :list,
+def debut_partie(joueur1: object, joueur2: object,
+                 tableau_invisible_joueur1: list, tableau_invisible_joueur2: list,
                  number_of_ships: int):
     # Victoire devient True quand un joueur détruit tout les bateaux adverse
     victoire = False
@@ -289,16 +288,16 @@ def debut_partie(joueur1 :object, joueur2 :object,
 
         if number_of_ships == 3:
             verif_petite_partie(joueur1,
-                            joueur2,
-                            tableau_invisible_joueur1, tableau_invisible_joueur2
-                            )
+                                joueur2,
+                                tableau_invisible_joueur1, tableau_invisible_joueur2
+                                )
 
 
         elif number_of_ships == 5:
             verif_grande_partie(joueur1,
-                            joueur2,
-                            tableau_invisible_joueur1, tableau_invisible_joueur2,
-                            )
+                                joueur2,
+                                tableau_invisible_joueur1, tableau_invisible_joueur2,
+                                )
 
         if verif_win(joueur2, number_of_ships) == True:
             victoire = True
@@ -309,19 +308,16 @@ def debut_partie(joueur1 :object, joueur2 :object,
             print("le joueur 2 a gagné")
 
 
-def verif_petite_partie(joueur1,
-                    joueur2,
-                    tableau_invisible_joueur1, tableau_invisible_joueur2
-                    ):
-
+def verif_petite_partie(joueur1: object,
+                        joueur2: object,
+                        tableau_invisible_joueur1: list, tableau_invisible_joueur2: list
+                        ):
     print("plateau du joueur 2 : \n")
 
     tour_de_jeu(joueur1, joueur2, tableau_invisible_joueur2)
 
     rafraichir_position(joueur2, joueur2.porte_avion, joueur2.torpilleur, joueur2.croiseur)
     verif_bateau(joueur1, joueur2.porte_avion, joueur2.torpilleur, joueur2.croiseur)
-
-
 
     print("plateau du joueur 1 : \n")
     tour_de_jeu(joueur2, joueur1, tableau_invisible_joueur1)
@@ -330,22 +326,22 @@ def verif_petite_partie(joueur1,
     verif_bateau(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur)
 
 
-
-def verif_grande_partie(joueur1, joueur2,
-                    tableau_invisible_joueur1, tableau_invisible_joueur2,
-                    ):
+def verif_grande_partie(joueur1: object, joueur2: object,
+                        tableau_invisible_joueur1: list, tableau_invisible_joueur2: list,
+                        ):
     print("plateau du joueur 2 : \n")
 
     tour_de_jeu(joueur1, joueur2, tableau_invisible_joueur2)
 
-    rafraichir_position(joueur2, joueur2.porte_avion, joueur2.torpilleur, joueur2.croiseur, joueur2.cannoniere, joueur2.destroyer)
-    verif_bateau(joueur1, joueur2.porte_avion, joueur2.torpilleur, joueur2.croiseur, joueur2.cannoniere, joueur2.destroyer)
+    rafraichir_position(joueur2, joueur2.porte_avion, joueur2.torpilleur, joueur2.croiseur, joueur2.cannoniere,
+                        joueur2.destroyer)
+    verif_bateau(joueur1, joueur2.porte_avion, joueur2.torpilleur, joueur2.croiseur, joueur2.cannoniere,
+                 joueur2.destroyer)
 
     print("plateau du joueur 1 : \n")
     tour_de_jeu(joueur2, joueur1, tableau_invisible_joueur1)
 
-    rafraichir_position(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur, joueur1.cannoniere, joueur1.destroyer)
-    verif_bateau(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur, joueur1.cannoniere, joueur1.destroyer)
-
-
-
+    rafraichir_position(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur, joueur1.cannoniere,
+                        joueur1.destroyer)
+    verif_bateau(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur, joueur1.cannoniere,
+                 joueur1.destroyer)
