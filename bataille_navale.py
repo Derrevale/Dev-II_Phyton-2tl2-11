@@ -1,5 +1,6 @@
 # Importation des fonctions depuis action.py
 from action import *
+from interface import *
 
 # Importation permettant de récuperer les arguments utilisé lors de l'appel du code
 import sys
@@ -45,6 +46,7 @@ if __name__ == '__main__':
     elif argument == "gui":
     # Partie en mode GUI
         print("On démarre en mode gui")
+        interface()
 
     else:
         print("Mode de jeu inconnu.\nPrécisez une un mode de jeu en paramètre\nconsole/gui")
