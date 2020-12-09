@@ -46,8 +46,8 @@ if __name__ == '__main__':
     elif argument == "gui":
     # Partie en mode GUI
         print("On démarre en mode gui")
-        interface()
-
+        interface_jeu = Interface(1280,800)
+        interface_jeu.lancement_jeu()
     else:
         print("Mode de jeu inconnu.\nPrécisez une un mode de jeu en paramètre\nconsole/gui")
 
