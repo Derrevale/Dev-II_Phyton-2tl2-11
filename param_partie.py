@@ -1,14 +1,23 @@
 from joueur import Joueur
-from tableau import CreerTableau
+from tableau import Tableau
 
 
 def nom_de_joueur(x: int):
+    """
+    fonction servant a recuperer un str donner par l'utilisateur
+    :param x: integer correspondant au numero du joueur
+    :return: un string correspondant a nom_joueur
+    """
     # Fonction d'attribution des noms
     nom_joueur = input("\nJoueur " + str(x) + ", veuillez introduire votre nom : ")
     return nom_joueur
 
 
 def selection_type_partie_console():
+    """
+    fonction permettant a l'utilisateur de choisir le type de partie grande/petite
+    :return: un integer nombre_ligne_colonne correspondant au dimension du tableau
+    """
     petite_bat = "P"
     grande_bat = "G"
     lancement = False
@@ -39,6 +48,11 @@ def selection_type_partie_console():
 
 
 def selection_nombre_bateau(x: int):
+    """
+    fonction servant a attribuer le nombre de bateau en fonction de la dimension du tableau de jeu
+    :param x: integer correspondant au dimension tu tableau
+    :return: un integer correspondant au nombre de bateau dans la partie
+    """
     nombre_bateau = 0
     if x == 5:
         nombre_bateau = 3
@@ -47,7 +61,14 @@ def selection_nombre_bateau(x: int):
 
     return nombre_bateau
 
+
 def creation_tableau_joueur(dimension: int, nom_joueur: str):
-    plateau_joueur = CreerTableau(dimension)
+    """
+    fonction servant a creer un objet Tableau et un objet Joueur et attribuer a Joueur le tableau
+    :param dimension: integer correspondant aux dimension du tableau de jeu
+    :param nom_joueur: string correspondant au nom entrer par le joueur
+    :return: objet Joueur possedant un nom et un objet Tableau contenant un tableau de la taille de la dimension donnee
+    """
+    plateau_joueur = Tableau(dimension)
     plateau_joueur.creation_tableau()
     return Joueur(nom_joueur, plateau_joueur)

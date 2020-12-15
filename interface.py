@@ -11,6 +11,10 @@ class Interface:
         self.hauteur = hauteur_fenetre
 
     def lancement_jeu(self):
+        """
+
+        :return:
+        """
         global screen
         NOIR = (0,0,0)
 

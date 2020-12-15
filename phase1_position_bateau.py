@@ -2,11 +2,26 @@ from bateau import Bateau
 
 
 def afficher_tableau(tableau: list):
+    """
+    fonction servant a afficher chaque valeur d'un tableau
+    :param tableau: list
+    :return: aucun
+    """
     for elements in tableau:
         print(elements)
 
 
 def positionner_bateau(joueur: object, number_of_ships: int):
+    """
+    fonction permettant au joueur de placer ses bateaux
+    :param joueur: objet Joueur correspondant au joueur qui dois placer son tableau
+    :param number_of_ships: integer correspondant au nombre de bateau dans la partie
+    :return: aucun
+    :raises: IndexError si la valeur est hors list
+    :raises: KeyError si la valeur n'est pas du bon type
+    :raises: ValueError si la valeur n'est pas disponible
+
+    """
     for elements in range(1, number_of_ships + 1):
         afficher_tableau(joueur.plateau_joueur.tableau)
         if elements == 1:
@@ -57,18 +72,10 @@ def positionner_bateau(joueur: object, number_of_ships: int):
 
                 bateau.position_bateau_verif(coord_col, coord_rangee, bateau, joueur.plateau_joueur.tableau,
                                              horizontal_ou_vertical)
-            except IndexError:
+            except (IndexError, KeyError, ValueError):
                 print("Erreur, veuillez introduire des coordonnées valides\n")
-            except ZeroDivisionError:
-                print("Erreur, veuillez introduire des coordonnées valides\n")
-            except KeyError:
-                print("Erreur, veuillez introduire des coordonnées valides\n")
-                continue
-            except ValueError:
-                print("Erreur, veuillez introduire des coordonnées valides\n")
-                continue
             else:
-                print(coord_col)
+
                 bateau.position_bateau(coord_col, coord_rangee, bateau, joueur.plateau_joueur.tableau,
                                        horizontal_ou_vertical)
 
@@ -77,7 +84,7 @@ def positionner_bateau(joueur: object, number_of_ships: int):
     afficher_tableau(joueur.plateau_joueur.tableau)
 
     fin_de_tour = False
-    while fin_de_tour == False:
+    while not fin_de_tour:
         print("Votre tour est fini , le joueur suivant peut s'installer devant l'ordinateur...\n\n\n")
         valid_fin_de_tour = input("joueur suivant êtes vous prêt o/n\n\n").upper()
         if valid_fin_de_tour == "O" or valid_fin_de_tour == "OUI":
