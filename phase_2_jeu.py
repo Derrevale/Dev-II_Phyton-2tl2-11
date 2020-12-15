@@ -1,7 +1,7 @@
 # Importation de la classe tableau
 import copy
 import random
-from phase1_position_bateau import *
+from phase_1_position_bateau import *
 
 
 def effectuer_tir(rangee: int, col: str, adversaire: object):
