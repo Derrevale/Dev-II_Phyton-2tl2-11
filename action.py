@@ -287,17 +287,17 @@ def debut_partie(joueur1: object, joueur2: object,
     while victoire == False:
 
         if number_of_ships == 3:
-            verif_petite_partie(joueur1,
-                                joueur2,
-                                tableau_invisible_joueur1, tableau_invisible_joueur2
-                                )
+            petite_partie(joueur1,
+                          joueur2,
+                          tableau_invisible_joueur1, tableau_invisible_joueur2
+                          )
 
 
         elif number_of_ships == 5:
-            verif_grande_partie(joueur1,
-                                joueur2,
-                                tableau_invisible_joueur1, tableau_invisible_joueur2,
-                                )
+            grande_partie(joueur1,
+                          joueur2,
+                          tableau_invisible_joueur1, tableau_invisible_joueur2,
+                          )
 
         if verif_win(joueur2, number_of_ships) == True:
             victoire = True
@@ -308,10 +308,10 @@ def debut_partie(joueur1: object, joueur2: object,
             print("le joueur 2 a gagné")
 
 
-def verif_petite_partie(joueur1: object,
-                        joueur2: object,
-                        tableau_invisible_joueur1: list, tableau_invisible_joueur2: list
-                        ):
+def petite_partie(joueur1: object,
+                  joueur2: object,
+                  tableau_invisible_joueur1: list, tableau_invisible_joueur2: list
+                  ):
     print("plateau du joueur 2 : \n")
 
     tour_de_jeu(joueur1, joueur2, tableau_invisible_joueur2)
@@ -326,9 +326,9 @@ def verif_petite_partie(joueur1: object,
     verif_bateau(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur)
 
 
-def verif_grande_partie(joueur1: object, joueur2: object,
-                        tableau_invisible_joueur1: list, tableau_invisible_joueur2: list,
-                        ):
+def grande_partie(joueur1: object, joueur2: object,
+                  tableau_invisible_joueur1: list, tableau_invisible_joueur2: list,
+                  ):
     print("plateau du joueur 2 : \n")
 
     tour_de_jeu(joueur1, joueur2, tableau_invisible_joueur2)
