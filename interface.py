@@ -99,16 +99,17 @@ class Interface:
             screen.blit(image_canon, (225, 575))
             screen.blit(image_roulette, (525, 575))
             screen.blit(image_piece, (440, 625))
+            x,y = pygame.mouse.get_pos()
+            print(f"je suis x {x}")
+            print(f"je suis y {y}")
 
             self.CreerGrille()
             pygame.display.update()
 
 
-    def CreerGrille(self):
+    def CreerGrille(self, surface, grid):
         taille_blocks = 45
-        for x in range(1,13):
-            for y in range(3,12):
-                rect = pygame.Rect(x * taille_blocks, y*taille_blocks, taille_blocks, taille_blocks)
-                pygame.draw.rect(screen, BRUN, rect, 1)
-                # print("abcisse : " + str(rect.y))
+        for x in range(len(grid)):
+            for y in range(grid[x]):
+                pygame.draw.rect(surface, grid[x][y], (top_left))
 

@@ -230,8 +230,8 @@ def positionner_bateau(joueur: object, number_of_ships: int):
 
 
 def verif_bateau(joueur_actuel: object, *arg):
-    counter = []
     for nom_du_bateau in arg:
+        counter = []
         for elements in range(nom_du_bateau.taille_bateau):
             if nom_du_bateau.etat_bateau == "inactif":
                 print("ce bateau a déjà été détruit")
@@ -247,6 +247,7 @@ def verif_bateau(joueur_actuel: object, *arg):
                         print(joueur_actuel.portefeuille_joueur)
                     else:
                         print("pas encore")
+        print(counter)
         print("L'état du bateau {} est le suivant : {} ".format(nom_du_bateau.nom_bateau, nom_du_bateau.etat_bateau))
 
 
@@ -287,17 +288,17 @@ def debut_partie(joueur1: object, joueur2: object,
     while victoire == False:
 
         if number_of_ships == 3:
-            petite_partie(joueur1,
-                          joueur2,
-                          tableau_invisible_joueur1, tableau_invisible_joueur2
-                          )
+            verif_petite_partie(joueur1,
+                                joueur2,
+                                tableau_invisible_joueur1, tableau_invisible_joueur2
+                                )
 
 
         elif number_of_ships == 5:
-            grande_partie(joueur1,
-                          joueur2,
-                          tableau_invisible_joueur1, tableau_invisible_joueur2,
-                          )
+            verif_grande_partie(joueur1,
+                                joueur2,
+                                tableau_invisible_joueur1, tableau_invisible_joueur2,
+                                )
 
         if verif_win(joueur2, number_of_ships) == True:
             victoire = True
@@ -308,10 +309,10 @@ def debut_partie(joueur1: object, joueur2: object,
             print("le joueur 2 a gagné")
 
 
-def petite_partie(joueur1: object,
-                  joueur2: object,
-                  tableau_invisible_joueur1: list, tableau_invisible_joueur2: list
-                  ):
+def verif_petite_partie(joueur1: object,
+                        joueur2: object,
+                        tableau_invisible_joueur1: list, tableau_invisible_joueur2: list
+                        ):
     print("plateau du joueur 2 : \n")
 
     tour_de_jeu(joueur1, joueur2, tableau_invisible_joueur2)
@@ -326,9 +327,9 @@ def petite_partie(joueur1: object,
     verif_bateau(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur)
 
 
-def grande_partie(joueur1: object, joueur2: object,
-                  tableau_invisible_joueur1: list, tableau_invisible_joueur2: list,
-                  ):
+def verif_grande_partie(joueur1: object, joueur2: object,
+                        tableau_invisible_joueur1: list, tableau_invisible_joueur2: list,
+                        ):
     print("plateau du joueur 2 : \n")
 
     tour_de_jeu(joueur1, joueur2, tableau_invisible_joueur2)
