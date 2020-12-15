@@ -1,69 +1,7 @@
 # Importation de la classe tableau
 import copy
 import random
-
-from bateau import Bateau
-from tableau import *
-
-# Importation de la classe joueur
-from joueur import Joueur
-
-
-def nom_de_joueur(x: int):
-    # Fonction d'attribution des noms
-    nom_joueur = input("\nJoueur " + str(x) + ", veuillez introduire votre nom : ")
-    return nom_joueur
-
-
-def selection_type_partie_console():
-    petite_bat = "P"
-    grande_bat = "G"
-    lancement = False
-    style_partie = input(
-        "Choisisez le style de partie que vous voulez jouez."
-        "\nGrande Bataille (10*10 , 5 Bateaux)"
-        "\nPetite Bataille (06*06 , 3 Bateaux)"
-        "\nG/P\n")
-
-    # verification que la valeur entrée est correcte
-    while not lancement:
-
-        if style_partie.upper() == petite_bat:
-            lancement = True
-            nombre_ligne_colonne = 5
-
-        elif style_partie.upper() == grande_bat:
-            lancement = True
-            nombre_ligne_colonne = 10
-        else:
-            print("erreur")
-            style_partie = input(
-                "Le choix entrez est incorecte veuillez réintroduire."
-                "\nGrande Bataille (10*10 , 5 Bateaux)"
-                "\nPetite Bataille (06*06 , 3 Bateaux)"
-                "\nG/P\n")
-    return nombre_ligne_colonne
-
-
-def selection_nombre_bateau(x: int):
-    nombre_bateau = 0
-    if x == 5:
-        nombre_bateau = 3
-    elif x == 10:
-        nombre_bateau = 5
-
-    return nombre_bateau
-
-
-def afficher_tableau(tableau: list):
-    for elements in tableau:
-        print(elements)
-
-
-def creation_tableau_joueur(dimension: int, nom_joueur: str):
-    plateau_joueur = CreerTableau(dimension)
-    plateau_joueur.creation_tableau()
-    return Joueur(nom_joueur, plateau_joueur)
+from phase1_position_bateau import *
 
 
 def effectuer_tir(rangee: int, col: int, adversaire: object):
@@ -151,84 +89,6 @@ def tour_de_jeu(joueur_actuel: object, adversaire: object, plateau_invisible: li
           "==========================================\n")
 
 
-def positionner_bateau(joueur: object, number_of_ships: int):
-    for elements in range(1, number_of_ships + 1):
-        afficher_tableau(joueur.plateau_joueur.tableau)
-        if elements == 1:
-            porte_avion = Bateau("porte-avion", 4)
-            joueur.porte_avion = porte_avion
-            joueur.nom_des_bateaux.append("porte-avion")
-            bateau = porte_avion
-
-        elif elements == 2:
-            torpilleur = Bateau("torpilleur", 2)
-            joueur.torpilleur = torpilleur
-            joueur.nom_des_bateaux.append("torpilleur")
-            bateau = torpilleur
-
-        elif elements == 3:
-            croiseur = Bateau("croiseur", 2)
-            joueur.croiseur = croiseur
-            joueur.nom_des_bateaux.append("croiseur")
-            bateau = croiseur
-
-        elif elements == 4:
-            canonniere = Bateau("canonniere", 3)
-            joueur.Canonniere = canonniere
-            joueur.nom_des_bateaux.append("canonniere")
-            bateau = canonniere
-        elif elements == 5:
-            destroyer = Bateau("destroyer", 3)
-            joueur.destroyer = destroyer
-            joueur.nom_des_bateaux.append("destroyer")
-            bateau = destroyer
-
-        print("Joueur {} le bateau que vous placez est le : {} avec une taille de : {}".format(joueur.nom,
-                                                                                               bateau.nom_bateau,
-                                                                                               bateau.taille_bateau))
-        while True:
-
-            try:
-                coord_col = input(
-                    "Joueur {}, veuillez choisir une colonne comme point de départ pour placer le {} : ".format(
-                        joueur.nom,
-                        bateau.nom_bateau)).upper()
-                coord_rangee = int(input(
-                    "Joueur {}, veuillez choisir une ligne comme point de départ pour placer le {} : ".format(
-                        joueur.nom,
-                        bateau.nom_bateau)))
-                horizontal_ou_vertical = input(
-                    "Voulez vous le placer horizontalement ou verticalement ? (h ou v)\n\n").lower()
-
-                bateau.position_bateau_verif(coord_col, coord_rangee, bateau, joueur.plateau_joueur.tableau,
-                                             horizontal_ou_vertical)
-            except IndexError:
-                print("Erreur, veuillez introduire des coordonnées valides\n")
-            except ZeroDivisionError:
-                print("Erreur, veuillez introduire des coordonnées valides\n")
-            except KeyError:
-                print("Erreur, veuillez introduire des coordonnées valides\n")
-                continue
-            except ValueError:
-                print("Erreur, veuillez introduire des coordonnées valides\n")
-                continue
-            else:
-                print(coord_col)
-                bateau.position_bateau(coord_col, coord_rangee, bateau, joueur.plateau_joueur.tableau,
-                                       horizontal_ou_vertical)
-
-                break
-
-    afficher_tableau(joueur.plateau_joueur.tableau)
-
-    fin_de_tour = False
-    while fin_de_tour == False:
-        print("Votre tour est fini , le joueur suivant peut s'installer devant l'ordinateur...\n\n\n")
-        valid_fin_de_tour = input("joueur suivant êtes vous prêt o/n\n\n").upper()
-        if valid_fin_de_tour == "O" or valid_fin_de_tour == "OUI":
-            fin_de_tour = True
-
-
 def verif_bateau(joueur_actuel: object, *arg):
     for nom_du_bateau in arg:
         counter = []
@@ -292,7 +152,7 @@ def debut_partie(joueur1: object, joueur2: object,
 
 
         elif number_of_ships == 5:
-            verif_grande_partie(joueur1,
+            grande_partie(joueur1,
                                 joueur2,
                                 tableau_invisible_joueur1, tableau_invisible_joueur2,
                                 )

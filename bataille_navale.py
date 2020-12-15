@@ -1,12 +1,14 @@
 # Importation des fonctions depuis action.py
 from action import *
 from interface import *
-
+from param_partie import *
 # Importation permettant de récuperer les arguments utilisé lors de l'appel du code
 import sys
 
 
 # Initialisation des valeur par défaut
+
+
 partie_finie = False
 partie_gagnee = False
 tour_joueur = 0
