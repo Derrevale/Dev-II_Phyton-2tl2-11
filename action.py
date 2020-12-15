@@ -288,10 +288,7 @@ def debut_partie(joueur1: object, joueur2: object,
     while victoire == False:
 
         if number_of_ships == 3:
-            verif_petite_partie(joueur1,
-                                joueur2,
-                                tableau_invisible_joueur1, tableau_invisible_joueur2
-                                )
+            petite_partie(joueur1, joueur2, tableau_invisible_joueur1, tableau_invisible_joueur2)
 
 
         elif number_of_ships == 5:
@@ -309,7 +306,7 @@ def debut_partie(joueur1: object, joueur2: object,
             print("le joueur 2 a gagné")
 
 
-def verif_petite_partie(joueur1: object,
+def petite_partie(joueur1: object,
                         joueur2: object,
                         tableau_invisible_joueur1: list, tableau_invisible_joueur2: list
                         ):
@@ -323,11 +320,11 @@ def verif_petite_partie(joueur1: object,
     print("plateau du joueur 1 : \n")
     tour_de_jeu(joueur2, joueur1, tableau_invisible_joueur1)
 
-    rafraichir_position(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur)
+    rafraichir_position(joueur1, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur)
     verif_bateau(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur)
 
 
-def verif_grande_partie(joueur1: object, joueur2: object,
+def grande_partie(joueur1: object, joueur2: object,
                         tableau_invisible_joueur1: list, tableau_invisible_joueur2: list,
                         ):
     print("plateau du joueur 2 : \n")
@@ -342,7 +339,7 @@ def verif_grande_partie(joueur1: object, joueur2: object,
     print("plateau du joueur 1 : \n")
     tour_de_jeu(joueur2, joueur1, tableau_invisible_joueur1)
 
-    rafraichir_position(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur, joueur1.cannoniere,
+    rafraichir_position(joueur1, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur, joueur1.cannoniere,
                         joueur1.destroyer)
     verif_bateau(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur, joueur1.cannoniere,
                  joueur1.destroyer)
