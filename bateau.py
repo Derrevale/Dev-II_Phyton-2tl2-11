@@ -30,7 +30,7 @@ class Bateau:
             for elements in range(nom_navire.taille_bateau):
                 if plateau[rangee][col + elements] == "o":
                     print("supperposition de bateau")
-                    lance_error = 1 / 0
+                    raise ValueError
 
 
 
@@ -39,7 +39,7 @@ class Bateau:
             for elements in range(nom_navire.taille_bateau):
                 if plateau[rangee + elements][col] == "o":
                     print("erreur superposition de 2 bateaux")
-                    lance_error = 1 / 0
+                    raise ValueError
 
     def position_bateau(self, col: int, rangee: int, nom_navire: str, plateau: list, orientation: str):
         coordonnees_plateau = {
@@ -58,11 +58,11 @@ class Bateau:
                 position = [rangee, col + elements, "o"]
                 self.coordonnees_bateau.append(position)
                 plateau[nom_navire.coordonnees_bateau[0][0]][nom_navire.coordonnees_bateau[0][1] + elements] = "o"
-                print(position)
+
 
         elif orientation == "v":
             for elements in range(nom_navire.taille_bateau):
                 position = [rangee + elements, col, "o"]
                 self.coordonnees_bateau.append(position)
                 plateau[nom_navire.coordonnees_bateau[0][0] + elements][nom_navire.coordonnees_bateau[0][1]] = "o"
-                print(position)
+
