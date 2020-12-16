@@ -44,7 +44,7 @@ def positionner_bateau(joueur: object, number_of_ships: int):
 
         elif elements == 4:
             canonniere = Bateau("canonniere", 3)
-            joueur.Canonniere = canonniere
+            joueur.canonniere = canonniere
             joueur.nom_des_bateaux.append("canonniere")
             bateau = canonniere
         elif elements == 5:

@@ -8,8 +8,6 @@ import sys
 # Initialisation des valeur par défaut
 
 
-partie_finie = False
-partie_gagnee = False
 tour_joueur = 0
 type_de_partie = "console"
 

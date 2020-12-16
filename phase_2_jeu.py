@@ -42,14 +42,14 @@ def choix_action(joueur_actu: object):
     :param joueur_actu: objet Joueur correspondant au joueur dont c'est le tour de jeu
     :return: resultat_roulette
     """
-    roulette = ["coup vertical"]
+    roulette = ["coup vertical", "coup horizontal", "rien", "rien"]
     resultat_roulette = ""
     if joueur_actu.portefeuille_joueur >= 150:
         choix_roulette = input(
             "{}, Vous avez actuellement {} euros dans votre portefeuille, voulez-vous faire tourner la roulette pour"
             " 150 euros? (o ou n) \n\n".format(joueur_actu.nom_joueur, joueur_actu.portefeuille_joueur))
         if choix_roulette == "o":
-            # x.portefeuille_joueur = x.portefeuille_joueur - 150
+            joueur_actu.portefeuille_joueur = joueur_actu.portefeuille_joueur - 150
             resultat_roulette = random.choice(roulette)
             if resultat_roulette == "rien":
                 print("Dommage, vous n'avez rien gagné !")
@@ -58,6 +58,54 @@ def choix_action(joueur_actu: object):
     else:
         print("Vous n'avez pas assez d'argent pour faire tourner la roulette\n\n")
     return resultat_roulette
+
+
+def coup_special(joueur_actu: object, plateau: list):
+    """
+    Fonction permettant d'executer le coup spécial obtenu à partir de la fonction précédente choix_action()
+    :param joueur_actu: Object joueur correspondant au joueur actuel dont c'est le tour de jeu
+    :param plateau: Objet plateau réprésentant le plateau de jeu du joueur adverse
+    :return:
+    """
+    coordonnees_plateau = {
+        "A": 1,
+        "B": 2,
+        "C": 3,
+        "D": 4,
+        "E": 5,
+        "F": 6,
+        "G": 7,
+        "H": 8,
+        "I": 9,
+        "J": 10
+    }
+
+    choix = choix_action(joueur_actu)
+    if choix != "rien":
+        if choix != "":
+            col = input(
+                "Veuillez choisir une colonne comme point de départ pour effectuer le coup spécial suivant : {} -> "
+                .format(choix)).upper()
+            rangee = int(input(
+                "veuillez choisir une rangée comme point de départ pour effectuer le coup spécial suivant : {} -> "
+                .format(choix)))
+            col = coordonnees_plateau[col]
+            rangee = rangee + 1
+            if choix == "coup horizontal":
+                print("Coup horizontal!")
+                for elements in range(3):
+                    if plateau[rangee][col + elements] == "o":
+                        plateau[rangee][col + elements] = "@"
+                    else:
+                        plateau[rangee][col + elements] = "x"
+
+            elif choix == "coup vertical":
+                print("coup vertical !")
+                for elements in range(3):
+                    if plateau[rangee + elements][col] == "o":
+                        plateau[rangee + elements][col] = "@"
+                    else:
+                        plateau[rangee + elements][col] = "x"
 
 
 def plateau_invisible_adversaire(plateau_invisible: list, plateau_a_copier: list):
@@ -90,12 +138,14 @@ def tour_de_jeu(joueur_actuel: object, adversaire: object, plateau_invisible: li
         try:
 
             plateau_invisible_adversaire(plateau_invisible, adversaire.plateau_joueur.tableau)
+            coup_special(joueur_actuel, adversaire.plateau_joueur.tableau)
+            plateau_invisible_adversaire(plateau_invisible, adversaire.plateau_joueur.tableau)
             choix_col_joueur = input(
                 "Joueur : {}, Veuillez introduire la colonne : ".format(joueur_actuel.nom))
             choix_rangee_joueur = int(
                 input("Joueur : {}, Veuillez introduire la ligne : ".format(joueur_actuel.nom)))
             effectuer_tir(choix_rangee_joueur, choix_col_joueur.upper(), adversaire)
-        except (KeyError,ValueError):
+        except (KeyError, ValueError):
             print("Erreur, veuillez introduire des coordonnées valides\n")
             continue
         else:
@@ -128,7 +178,7 @@ def verif_bateau(joueur_actuel: object, *arg):
                     nom_du_bateau.etat_bat = "inactif"
                     if nom_du_bateau.etat_bat == "inactif":
                         joueur_actuel.portefeuille_joueur = joueur_actuel.portefeuille_joueur + 150
-                        print("montant du portefeuille du joueur: ",joueur_actuel.portefeuille_joueur)
+                        print("montant du portefeuille du joueur: ", joueur_actuel.portefeuille_joueur)
                     else:
                         print("pas toucher")
         print("L'état du bateau {} est le suivant : {} ".format(nom_du_bateau.nom_bateau, nom_du_bateau.etat_bat))
@@ -160,11 +210,9 @@ def verif_win(joueur: object, number_of_ship: int):
     if number_of_ship == 3:
         if joueur.porte_avion.etat_bat and joueur.torpilleur.etat_bat and joueur.croiseur.etat_bat == "inactif":
             return True
-    elif number_of_ship == 2:
-        if joueur.porte_avion.etat_bat and joueur.torpilleur.etat_bat == "inactif":
-            return True
-    elif number_of_ship == 1:
-        if joueur.porte_avion.etat_bat == "inactif":
+    elif number_of_ship == 5:
+        if joueur.porte_avion.etat_bat and joueur.torpilleur.etat_bat and joueur.croiseur.etat_bat \
+                and joueur.canonniere.etat_bat and joueur.destroyer.etat_bat == "inactif":
             return True
 
 
@@ -249,15 +297,15 @@ def grande_partie(joueur1: object, joueur2: object,
 
     tour_de_jeu(joueur1, joueur2, tableau_invisible_joueur2)
 
-    rafraichir_position(joueur2, joueur2.porte_avion, joueur2.torpilleur, joueur2.croiseur, joueur2.cannoniere,
+    rafraichir_position(joueur2, joueur2.porte_avion, joueur2.torpilleur, joueur2.croiseur, joueur2.canonniere,
                         joueur2.destroyer)
-    verif_bateau(joueur1, joueur2.porte_avion, joueur2.torpilleur, joueur2.croiseur, joueur2.cannoniere,
+    verif_bateau(joueur1, joueur2.porte_avion, joueur2.torpilleur, joueur2.croiseur, joueur2.canonniere,
                  joueur2.destroyer)
 
     print("plateau du joueur 1 : \n")
     tour_de_jeu(joueur2, joueur1, tableau_invisible_joueur1)
 
-    rafraichir_position(joueur1, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur, joueur1.cannoniere,
+    rafraichir_position(joueur1, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur, joueur1.canonniere,
                         joueur1.destroyer)
-    verif_bateau(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur, joueur1.cannoniere,
+    verif_bateau(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur, joueur1.canonniere,
                  joueur1.destroyer)

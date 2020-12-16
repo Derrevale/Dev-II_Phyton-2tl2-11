@@ -1,6 +1,6 @@
 class Bateau:
 
-    def __init__(self, nom: str, taille :int, etat="actif"):
+    def __init__(self, nom: str, taille: int, etat="actif"):
         self.nom_bateau = nom
         self.coordonnees_bateau = []
         self.etat_bat = etat
@@ -32,8 +32,6 @@ class Bateau:
                     print("supperposition de bateau")
                     raise ValueError
 
-
-
         elif orientation == "v":
 
             for elements in range(nom_navire.taille_bateau):
@@ -48,7 +46,11 @@ class Bateau:
             "C": 3,
             "D": 4,
             "E": 5,
-            "F": 6
+            "F": 6,
+            "G": 7,
+            "H": 8,
+            "I": 9,
+            "J": 10
         }
         col = coordonnees_plateau[col]
         rangee = rangee + 1
@@ -59,10 +61,8 @@ class Bateau:
                 self.coordonnees_bateau.append(position)
                 plateau[nom_navire.coordonnees_bateau[0][0]][nom_navire.coordonnees_bateau[0][1] + elements] = "o"
 
-
         elif orientation == "v":
             for elements in range(nom_navire.taille_bateau):
                 position = [rangee + elements, col, "o"]
                 self.coordonnees_bateau.append(position)
                 plateau[nom_navire.coordonnees_bateau[0][0] + elements][nom_navire.coordonnees_bateau[0][1]] = "o"
-
