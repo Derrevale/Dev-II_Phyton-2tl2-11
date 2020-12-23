@@ -70,6 +70,9 @@ def positionner_bateau(joueur: object, number_of_ships: int):
                 horizontal_ou_vertical = input(
                     "Voulez vous le placer horizontalement ou verticalement ? (h ou v)\n\n").lower()
 
+                if horizontal_ou_vertical != "h" and horizontal_ou_vertical != "v":
+                    raise ValueError
+
                 bateau.position_bateau_verif(coord_col, coord_rangee, bateau, joueur.plateau_joueur.tableau,
                                              horizontal_ou_vertical)
             except (IndexError, KeyError, ValueError):
