@@ -21,6 +21,6 @@ def envoi_score(joueur1: object, joueur2: object):
 
 
 def afficher_score():
-    cursor.execute("SELECT Score_Partie,Pseudo_joueur from score_joueur ")
-    letest = cursor.fetchall()
-    print(letest)
+    cursor.execute("SELECT Score_Partie,Pseudo_joueur from score_joueur order by Score_Partie")
+    tableau_score = cursor.fetchall()
+    print(tableau_score)
