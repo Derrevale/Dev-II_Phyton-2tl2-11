@@ -32,14 +32,14 @@ def effectuer_tir(rangee: int, col: str, adversaire: object, joueur_actuel: obje
     if adversaire.plateau_joueur.tableau[rangee][col] == "o":
         adversaire.plateau_joueur.tableau[rangee][col] = "@"
         print("Touché")
-        adversaire - 50
-        joueur_actuel + 50
+        adversaire-50
+        joueur_actuel+50
     elif adversaire.plateau_joueur.tableau[rangee][col] == "@":
         adversaire.plateau_joueur.tableau[rangee][col] = "@"
     else:
         print("Raté!")
         adversaire.plateau_joueur.tableau[rangee][col] = "X"
-        adversaire + 25
+        adversaire+25
 
 
 def choix_action(joueur_actu: object):
@@ -91,29 +91,32 @@ def coup_special(joueur_actu: object, plateau: list):
     choix = choix_action(joueur_actu)
     if choix != "rien":
         if choix != "":
-            col = input(
-                "Veuillez choisir une colonne comme point de départ pour effectuer le coup spécial suivant : {} -> "
+            try:
+                col = input(
+                    "Veuillez choisir une colonne comme point de départ pour effectuer le coup spécial suivant : {} -> "
                     .format(choix)).upper()
-            rangee = int(input(
-                "veuillez choisir une rangée comme point de départ pour effectuer le coup spécial suivant : {} -> "
+                rangee = int(input(
+                    "veuillez choisir une rangée comme point de départ pour effectuer le coup spécial suivant : {} -> "
                     .format(choix)))
-            col = coordonnees_plateau[col]
-            rangee = rangee + 1
-            if choix == "coup horizontal":
-                print("Coup horizontal!")
-                for elements in range(3):
-                    if plateau[rangee][col + elements] == "o":
-                        plateau[rangee][col + elements] = "@"
-                    else:
-                        plateau[rangee][col + elements] = "x"
+                col = coordonnees_plateau[col]
+                rangee = rangee + 1
+                if choix == "coup horizontal":
+                    print("Coup horizontal!")
+                    for elements in range(3):
+                        if plateau[rangee][col + elements] == "o":
+                            plateau[rangee][col + elements] = "@"
+                        else:
+                            plateau[rangee][col + elements] = "x"
 
-            elif choix == "coup vertical":
-                print("coup vertical !")
-                for elements in range(3):
-                    if plateau[rangee + elements][col] == "o":
-                        plateau[rangee + elements][col] = "@"
-                    else:
-                        plateau[rangee + elements][col] = "x"
+                elif choix == "coup vertical":
+                    print("coup vertical !")
+                    for elements in range(3):
+                        if plateau[rangee + elements][col] == "o":
+                            plateau[rangee + elements][col] = "@"
+                        else:
+                            plateau[rangee + elements][col] = "x"
+            except IndexError:
+                print("Le coup spécial dépasse la portée disponible du tableau")
 
 
 def plateau_invisible_adversaire(plateau_invisible: list, plateau_a_copier: list):
@@ -152,8 +155,8 @@ def tour_de_jeu(joueur_actuel: object, adversaire: object, plateau_invisible: li
                 "Joueur : {}, Veuillez introduire la colonne : ".format(joueur_actuel.nom))
             choix_rangee_joueur = int(
                 input("Joueur : {}, Veuillez introduire la ligne : ".format(joueur_actuel.nom)))
-            effectuer_tir(choix_rangee_joueur, choix_col_joueur.upper(), adversaire, joueur_actuel)
-        except (KeyError, ValueError):
+            effectuer_tir(choix_rangee_joueur, choix_col_joueur.upper(), adversaire,joueur_actuel)
+        except (KeyError, ValueError, IndexError):
             print("Erreur, veuillez introduire des coordonnées valides\n")
             continue
         else:
@@ -185,7 +188,7 @@ def verif_bateau(joueur_actuel: object, *arg):
                 if len(counter) == nom_du_bateau.taille_bateau:
                     nom_du_bateau.etat_bat = "inactif"
                     if nom_du_bateau.etat_bat == "inactif":
-                        joueur_actuel + 300
+                        joueur_actuel+300
                         joueur_actuel.portefeuille_joueur = joueur_actuel.portefeuille_joueur + 150
                         print("montant du portefeuille du joueur: ", joueur_actuel.portefeuille_joueur)
                     else:
@@ -219,9 +222,6 @@ def verif_win(joueur: object, number_of_ship: int):
     if number_of_ship == 3:
         if joueur.porte_avion.etat_bat and joueur.torpilleur.etat_bat and joueur.croiseur.etat_bat == "inactif":
             return True
-    if number_of_ship == 1:
-        if joueur.porte_avion.etat_bat == "inactif":
-            return True
     elif number_of_ship == 5:
         if joueur.porte_avion.etat_bat and joueur.torpilleur.etat_bat and joueur.croiseur.etat_bat \
                 and joueur.canonniere.etat_bat and joueur.destroyer.etat_bat == "inactif":
@@ -253,9 +253,6 @@ def lancement_partie(joueur1: object, joueur2: object,
         if number_of_ships == 3:
             petite_partie(joueur1, joueur2, tableau_invisible_joueur1, tableau_invisible_joueur2)
 
-        elif number_of_ships == 1:
-            test_partie(joueur1, joueur2, tableau_invisible_joueur1, tableau_invisible_joueur2)
-
         elif number_of_ships == 5:
             grande_partie(joueur1,
                           joueur2,
@@ -271,7 +268,7 @@ def lancement_partie(joueur1: object, joueur2: object,
             print("le joueur 2 a gagné")
 
     envoi_score(joueur1, joueur2)
-    afficher_score(joueur1, joueur2)
+    afficher_score()
 
 
 def petite_partie(joueur1: object,
@@ -327,29 +324,3 @@ def grande_partie(joueur1: object, joueur2: object,
                         joueur1.destroyer)
     verif_bateau(joueur2, joueur1.porte_avion, joueur1.torpilleur, joueur1.croiseur, joueur1.canonniere,
                  joueur1.destroyer)
-
-
-def test_partie(joueur1: object,
-                joueur2: object,
-                tableau_invisible_joueur1: list, tableau_invisible_joueur2: list
-                ):
-    """
-    fonction correspondant a un tout de jeu complet avec 3 bateaux
-    :param joueur1: objet Joueur correspondant au premier joueur
-    :param joueur2: objet Joueur correspondant a son adversaire
-    :param tableau_invisible_joueur1: liste correpondant au tableau sur lesquel le joueur 1 vas tirer
-    :param tableau_invisible_joueur2: liste correpondant au tableau sur lesquel le joueur 2 vas tirer
-    :return:
-    """
-    print("plateau du joueur 2 : \n")
-
-    tour_de_jeu(joueur1, joueur2, tableau_invisible_joueur2)
-
-    rafraichir_position(joueur2, joueur2.porte_avion)
-    verif_bateau(joueur1, joueur2.porte_avion)
-
-    print("plateau du joueur 1 : \n")
-    tour_de_jeu(joueur2, joueur1, tableau_invisible_joueur1)
-
-    rafraichir_position(joueur1, joueur1.porte_avion)
-    verif_bateau(joueur2, joueur1.porte_avion)
