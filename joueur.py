@@ -1,7 +1,7 @@
 class Joueur:
     """documentation classe joueur"""
 
-    def __init__(self, nom: str, plateau: object, montant_portefeuille=150):
+    def __init__(self, nom: str, plateau: object, montant_portefeuille=250):
         """
         fonction d'initialisation de l'objet Joueur
         :param nom: string correspondant au nom du joueur
@@ -19,9 +19,7 @@ class Joueur:
         return self.nom_joueur
 
     def __add__(self, other):
-        self.portefeuille_joueur = self.portefeuille_joueur + int(other)
-        self.score = self.portefeuille_joueur + int(other)
+        self.score = self.score + int(other)
 
     def __sub__(self, other):
-        self.portefeuille_joueur = self.portefeuille_joueur - int(other)
-        self.score = self.portefeuille_joueur - int(other)
+        self.score = self.score - int(other)

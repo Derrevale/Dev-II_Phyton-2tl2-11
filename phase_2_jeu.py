@@ -6,9 +6,10 @@ from database_connection import *
 from phase_1_position_bateau import *
 
 
-def effectuer_tir(rangee: int, col: str, adversaire: object):
+def effectuer_tir(rangee: int, col: str, adversaire: object, joueur_actuel: object):
     """
     fonction servant a effectuer un tir sur le tableau adverse
+    :param joueur_actuel:
     :param rangee: numero de la ligne
     :param col: numero de la colonne
     :param adversaire: objet Joueur correspond a l'adversaire
@@ -31,11 +32,14 @@ def effectuer_tir(rangee: int, col: str, adversaire: object):
     if adversaire.plateau_joueur.tableau[rangee][col] == "o":
         adversaire.plateau_joueur.tableau[rangee][col] = "@"
         print("Touché")
+        adversaire-50
+        joueur_actuel+50
     elif adversaire.plateau_joueur.tableau[rangee][col] == "@":
         adversaire.plateau_joueur.tableau[rangee][col] = "@"
     else:
         print("Raté!")
         adversaire.plateau_joueur.tableau[rangee][col] = "X"
+        adversaire+25
 
 
 def choix_action(joueur_actu: object):
@@ -50,9 +54,10 @@ def choix_action(joueur_actu: object):
         choix_roulette = input(
             "{}, Vous avez actuellement {} euros dans votre portefeuille, voulez-vous faire tourner la roulette pour"
             " 150 euros? (o ou n) \n\n".format(joueur_actu.nom_joueur, joueur_actu.portefeuille_joueur))
+        print("score:", joueur_actu.score)
         if choix_roulette == "o":
+            joueur_actu.portefeuille_joueur = joueur_actu.portefeuille_joueur - 150
             joueur_actu - 150
-            print(joueur_actu)
             resultat_roulette = random.choice(roulette)
             if resultat_roulette == "rien":
                 print("Dommage, vous n'avez rien gagné !")
@@ -147,7 +152,7 @@ def tour_de_jeu(joueur_actuel: object, adversaire: object, plateau_invisible: li
                 "Joueur : {}, Veuillez introduire la colonne : ".format(joueur_actuel.nom))
             choix_rangee_joueur = int(
                 input("Joueur : {}, Veuillez introduire la ligne : ".format(joueur_actuel.nom)))
-            effectuer_tir(choix_rangee_joueur, choix_col_joueur.upper(), adversaire)
+            effectuer_tir(choix_rangee_joueur, choix_col_joueur.upper(), adversaire,joueur_actuel)
         except (KeyError, ValueError):
             print("Erreur, veuillez introduire des coordonnées valides\n")
             continue
@@ -180,6 +185,7 @@ def verif_bateau(joueur_actuel: object, *arg):
                 if len(counter) == nom_du_bateau.taille_bateau:
                     nom_du_bateau.etat_bat = "inactif"
                     if nom_du_bateau.etat_bat == "inactif":
+                        joueur_actuel+300
                         joueur_actuel.portefeuille_joueur = joueur_actuel.portefeuille_joueur + 150
                         print("montant du portefeuille du joueur: ", joueur_actuel.portefeuille_joueur)
                     else:
@@ -258,7 +264,7 @@ def lancement_partie(joueur1: object, joueur2: object,
             victoire = True
             print("le joueur 2 a gagné")
 
-    envoi_score(joueur1,joueur2)
+    envoi_score(joueur1, joueur2)
     afficher_score()
 
 
