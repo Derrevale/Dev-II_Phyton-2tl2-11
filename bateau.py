@@ -1,3 +1,17 @@
+coordonnees_plateau = {
+    "A": 1,
+    "B": 2,
+    "C": 3,
+    "D": 4,
+    "E": 5,
+    "F": 6,
+    "G": 7,
+    "H": 8,
+    "I": 9,
+    "J": 10
+}
+
+
 class Bateau:
 
     def __init__(self, nom: str, taille: int, etat="actif"):
@@ -11,18 +25,7 @@ class Bateau:
         pass
 
     def position_bateau_verif(self, col: str, rangee: int, nom_navire: object, plateau: list, orientation: str):
-        coordonnees_plateau = {
-            "A": 1,
-            "B": 2,
-            "C": 3,
-            "D": 4,
-            "E": 5,
-            "F": 6,
-            "G": 7,
-            "H": 8,
-            "I": 9,
-            "J": 10
-        }
+
         col = coordonnees_plateau[col]
         rangee = rangee + 1
 
@@ -40,18 +43,7 @@ class Bateau:
                     raise ValueError
 
     def position_bateau(self, col: str, rangee: int, nom_navire: object, plateau: list, orientation: str):
-        coordonnees_plateau = {
-            "A": 1,
-            "B": 2,
-            "C": 3,
-            "D": 4,
-            "E": 5,
-            "F": 6,
-            "G": 7,
-            "H": 8,
-            "I": 9,
-            "J": 10
-        }
+
         col = coordonnees_plateau[col]
         rangee = rangee + 1
 

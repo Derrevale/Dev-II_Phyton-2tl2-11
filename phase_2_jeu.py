@@ -1,6 +1,8 @@
 # Importation de la classe tableau
 import copy
 import random
+
+from database_connection import *
 from phase_1_position_bateau import *
 
 
@@ -49,7 +51,8 @@ def choix_action(joueur_actu: object):
             "{}, Vous avez actuellement {} euros dans votre portefeuille, voulez-vous faire tourner la roulette pour"
             " 150 euros? (o ou n) \n\n".format(joueur_actu.nom_joueur, joueur_actu.portefeuille_joueur))
         if choix_roulette == "o":
-            joueur_actu.portefeuille_joueur = joueur_actu.portefeuille_joueur - 150
+            joueur_actu - 150
+            print(joueur_actu)
             resultat_roulette = random.choice(roulette)
             if resultat_roulette == "rien":
                 print("Dommage, vous n'avez rien gagné !")
@@ -254,6 +257,9 @@ def lancement_partie(joueur1: object, joueur2: object,
         if verif_win(joueur1, number_of_ships):
             victoire = True
             print("le joueur 2 a gagné")
+
+    envoi_score(joueur1,joueur2)
+    afficher_score()
 
 
 def petite_partie(joueur1: object,
