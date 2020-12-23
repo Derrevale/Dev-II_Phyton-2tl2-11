@@ -18,8 +18,8 @@ class Joueur:
     def nom(self):
         return self.nom_joueur
 
-    def __add__(self, other):
+    def __add__(self, other: int):
         self.score = self.score + int(other)
 
-    def __sub__(self, other):
+    def __sub__(self, other: int):
         self.score = self.score - int(other)

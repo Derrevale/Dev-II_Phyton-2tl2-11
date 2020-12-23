@@ -22,6 +22,7 @@ def positionner_bateau(joueur: object, number_of_ships: int):
     :raises: ValueError si la valeur n'est pas disponible
 
     """
+
     for elements in range(1, number_of_ships + 1):
         afficher_tableau(joueur.plateau_joueur.tableau)
         if elements == 1:

@@ -20,6 +20,7 @@ def selection_type_partie_console():
     """
     petite_bat = "P"
     grande_bat = "G"
+    test_bat = "TEST"
     lancement = False
     style_partie = input(
         "Choisisez le style de partie que vous voulez jouez."
@@ -37,6 +38,10 @@ def selection_type_partie_console():
         elif style_partie.upper() == grande_bat:
             lancement = True
             nombre_ligne_colonne = 10
+
+        elif style_partie.upper() == test_bat:
+            lancement = True
+            nombre_ligne_colonne = 8
         else:
             print("erreur")
             style_partie = input(
@@ -56,6 +61,8 @@ def selection_nombre_bateau(x: int):
     nombre_bateau = 0
     if x == 5:
         nombre_bateau = 3
+    elif x == 8:
+        nombre_bateau = 1
     elif x == 10:
         nombre_bateau = 5
 
