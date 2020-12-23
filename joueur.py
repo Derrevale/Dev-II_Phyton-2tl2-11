@@ -12,7 +12,16 @@ class Joueur:
         self.plateau_joueur = plateau
         self.portefeuille_joueur = montant_portefeuille
         self.nom_des_bateaux = []
+        self.score = 2000
 
     @property
     def nom(self):
         return self.nom_joueur
+
+    def __add__(self, other):
+        self.portefeuille_joueur = self.portefeuille_joueur + int(other)
+        self.score = self.portefeuille_joueur + int(other)
+
+    def __sub__(self, other):
+        self.portefeuille_joueur = self.portefeuille_joueur - int(other)
+        self.score = self.portefeuille_joueur - int(other)
