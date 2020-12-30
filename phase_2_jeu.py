@@ -29,6 +29,9 @@ def effectuer_tir(rangee: int, col: str, adversaire: object, joueur_actuel: obje
     }
     col = coordonnees_plateau[col]
     rangee = rangee + 1
+    print(adversaire.plateau_joueur.tableau[rangee][col] == "o")
+    print(f"rangée {rangee}")
+    print(f"col {col}")
     if adversaire.plateau_joueur.tableau[rangee][col] == "o":
         adversaire.plateau_joueur.tableau[rangee][col] = "@"
         print("Touché")
@@ -217,14 +220,14 @@ def verif_win(joueur: object, number_of_ship: int):
     :return: true si les bateaux sont a l'etats inactifs
     """
     if number_of_ship == 3:
-        if joueur.porte_avion.etat_bat and joueur.torpilleur.etat_bat and joueur.croiseur.etat_bat == "inactif":
+        if joueur.porte_avion.etat_bat == "inactif" and joueur.torpilleur.etat_bat == "inactif" and joueur.croiseur.etat_bat == "inactif":
             return True
     if number_of_ship == 1:
         if joueur.porte_avion.etat_bat == "inactif":
             return True
     elif number_of_ship == 5:
-        if joueur.porte_avion.etat_bat and joueur.torpilleur.etat_bat and joueur.croiseur.etat_bat \
-                and joueur.canonniere.etat_bat and joueur.destroyer.etat_bat == "inactif":
+        if joueur.porte_avion.etat_bat == "inactif" and joueur.torpilleur.etat_bat == "inactif" and joueur.croiseur.etat_bat == "inactif" \
+                and joueur.canonniere.etat_bat == "inactif" and joueur.destroyer.etat_bat == "inactif":
             return True
 
 

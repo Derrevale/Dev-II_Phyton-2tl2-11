@@ -1,5 +1,6 @@
 from joueur import Joueur
 from tableau import Tableau
+from bateau import Bateau
 
 
 def nom_de_joueur(x: int):
@@ -79,3 +80,17 @@ def creation_tableau_joueur(dimension: int, nom_joueur: str):
     plateau_joueur = Tableau(dimension)
     plateau_joueur.creation_tableau()
     return Joueur(nom_joueur, plateau_joueur)
+
+
+def joueur_auto():
+    joueur1 = creation_tableau_joueur(6, "nom_joueur1")
+    porte_avion = Bateau("porte_avion", 4)
+    croiseur = Bateau("croiseur", 2)
+    torpilleur = Bateau("torpilleur", 2)
+    porte_avion.position_bateau("A", 0, porte_avion, joueur1.plateau_joueur.tableau, "h")
+    croiseur.position_bateau("A", 2, croiseur, joueur1.plateau_joueur.tableau, "h")
+    torpilleur.position_bateau("A", 4, torpilleur, joueur1.plateau_joueur.tableau, "h")
+    joueur1.porte_avion = porte_avion
+    joueur1.torpilleur = torpilleur
+    joueur1.croiseur = croiseur
+    return joueur1
