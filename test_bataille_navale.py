@@ -123,8 +123,9 @@ class TestBatailleNavale(unittest.TestCase):
     # TEST param_partie
 
     def test_selection_nbr_bateau(self):
-        nbr_bat = selection_nombre_bateau(5)
-        self.assertEqual(nbr_bat, 3)
+        self.assertEqual(selection_nombre_bateau(5), 3)
+        self.assertEqual(selection_nombre_bateau(8), 1)
+        self.assertEqual(selection_nombre_bateau(10), 5)
 
     def test_creation_tab_joueur(self):
         mon_joueur = creation_tableau_joueur(10, "player")
@@ -144,6 +145,8 @@ class TestBatailleNavale(unittest.TestCase):
 
         self.assertEqual(mon_joueur.nom, "nom_joueur1")
         self.assertEqual(mon_joueur.plateau_joueur.dimension_tableau, 6)
+
+    # TEST database_connection
 
     def test_connection(self):
         cursor.execute("SELECT test_int,test_text from test_connection")
