@@ -28,12 +28,37 @@ class TestBatailleNavale(unittest.TestCase):
         self.j.canonniere = self.bateau4
         self.j.destroyer = self.bateau5
 
+    # TEST CLASSE Joueur
+
     def test_joueur_objet_de_joueur(self):
         """
         Méthode de classe permettant de vérifier si un objet est bien une instance de la classe joueur.
         :return: none
         """
         self.assertIsInstance(self.j, joueur.Joueur)
+
+    def test_nom_joueur(self):
+        joueur_nom = joueur.Joueur("Player ONE", self.tab, 200)
+        self.assertEqual(joueur_nom.nom, "Player ONE")
+
+    def test_soustraction_score_joueur(self):
+        self.j - 100
+        mon_reste = self.j.score
+        self.assertEqual(mon_reste, 1900)
+
+    def test_addtition_score_joueur(self):
+        self.j + 100
+        mon_reste = self.j.score
+        self.assertEqual(mon_reste, 2100)
+
+    # TEST CLASSE Bateau
+
+    def test_bateau_objet_de_bateau(self):
+        """
+        Méthode de classe permettant de vérifier si un objet est bien une instance de la classe joueur.
+        :return: none
+        """
+        self.assertIsInstance(self.bateau1, bateau.Bateau)
 
     def test_position_bateau_verif(self):
         """
@@ -65,6 +90,17 @@ class TestBatailleNavale(unittest.TestCase):
         elif self.nbr_bateaux == 5:
             self.assertEqual(self.bateau1.taille_bateau + self.bateau2.taille_bateau + self.bateau3.taille_bateau
                              + self.bateau4.taille_bateau + self.bateau5.taille_bateau, 14)
+
+    # TEST CLASSE Tableau
+
+    def test_tableau_objet_de_tableau(self):
+        """
+        Méthode de classe permettant de vérifier si un objet est bien une instance de la classe joueur.
+        :return: none
+        """
+        self.assertIsInstance(self.tab, tableau.Tableau)
+
+
 
 
 if __name__ == "__main__":
