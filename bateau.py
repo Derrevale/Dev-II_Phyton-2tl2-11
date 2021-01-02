@@ -59,14 +59,14 @@ class Bateau:
         if orientation == "h":
             for elements in range(nom_navire.taille_bateau):
                 if plateau[rangee][col + elements] == "o":
-                    print("supperposition de bateau")
+
                     raise ValueError
 
         elif orientation == "v":
 
             for elements in range(nom_navire.taille_bateau):
                 if plateau[rangee + elements][col] == "o":
-                    print("erreur superposition de 2 bateaux")
+
                     raise ValueError
 
     def position_bateau(self, col: str, rangee: int, nom_navire: object, plateau: list, orientation: str):

@@ -91,6 +91,39 @@ class TestBatailleNavale(unittest.TestCase):
             self.assertEqual(self.bateau1.taille_bateau + self.bateau2.taille_bateau + self.bateau3.taille_bateau
                              + self.bateau4.taille_bateau + self.bateau5.taille_bateau, 14)
 
+    def test_bateau_verif_position_horizontal(self):
+        plateau = self.tab.tableau
+        plateau[1][1] = "o"
+        my_bateau = self.bateau4
+        with self.assertRaises(ValueError):
+            my_bateau.position_bateau_verif("A", 0, my_bateau, plateau, "h")
+
+    def test_bateau_verif_position_vertical(self):
+        plateau = self.tab.tableau
+        plateau[1][1] = "o"
+        my_bateau = self.bateau4
+        with self.assertRaises(ValueError):
+            my_bateau.position_bateau_verif("A", 0, my_bateau, plateau, "v")
+
+    def test_bateau_position_horizontal(self):
+        plateau = self.tab.tableau
+        my_bateau = self.bateau4
+        my_bateau.position_bateau("A", 0, my_bateau, plateau, "h")
+        self.assertEqual(plateau[1][1], "o")
+        self.assertEqual(plateau[1][2], "o")
+        self.assertEqual(plateau[1][3], "o")
+
+
+    def test_bateau_position_vertical(self):
+        plateau = self.tab.tableau
+        my_bateau = self.bateau4
+        my_bateau.position_bateau("A", 0, my_bateau, plateau, "v")
+        self.assertEqual(plateau[1][1], "o")
+        self.assertEqual(plateau[2][1], "o")
+        self.assertEqual(plateau[3][1], "o")
+
+
+
     # TEST CLASSE Tableau
 
     def test_tableau_objet_de_tableau(self):
@@ -99,8 +132,6 @@ class TestBatailleNavale(unittest.TestCase):
         :return: none
         """
         self.assertIsInstance(self.tab, tableau.Tableau)
-
-
 
 
 if __name__ == "__main__":
