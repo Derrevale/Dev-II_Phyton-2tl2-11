@@ -2,24 +2,49 @@ from bateau import Bateau
 
 
 def afficher_tableau(tableau: list):
-    """
-    fonction servant a afficher chaque valeur d'un tableau
-    :param tableau: list
-    :return: aucun
+    """ Fonction servant a afficher chaque valeur d'un tableau
+    PRE : -tableau = list
+    POST : print(elements) quand elements est dans tableau
     """
     for elements in tableau:
         print(elements)
 
 
 def positionner_bateau(joueur: object, number_of_ships: int):
-    """
-    fonction permettant au joueur de placer ses bateaux
-    :param joueur: objet Joueur correspondant au joueur qui dois placer son tableau
-    :param number_of_ships: integer correspondant au nombre de bateau dans la partie
-    :return: aucun
-    :raises: IndexError si la valeur est hors list
-    :raises: KeyError si la valeur n'est pas du bon type
-    :raises: ValueError si la valeur n'est pas disponible
+    """ Fonction permettant au joueur de placer ses bateaux
+    PRE :
+        - joueur = objet Joueur
+        - number_of_ships = integer
+    POST :
+        - appel afficher_tableau(joueur.plateau_joueur.tableau)
+        - boucle elements quand elements = range(1,nombre_of_ship+1)
+        - si element == 1
+            - creation objet Bateau porte_avion
+            - attribution porte_avion a joueur
+
+        - si element == 2
+            - creation objet Bateau torpilleur
+            - attribution torpilleur a joueur
+
+        - si element == 3
+            - creation objet Bateau croiseur
+            - attribution croiseur a joueur
+
+        - si element == 4
+            - creation objet Bateau cannonniere
+            - attribution cannoniere a joueur
+
+        - si element == 5
+            - creation objet Bateau destroyer
+            - attribution destroyer a joueur
+
+        - appel fonction position_bateau_verif
+        - appel fonction positionner_bateau
+        - appel afficher_tableau(joueur.plateau_joueur.tableau) quand un bateau est positionner
+    RAISE:
+        - IndexError si la valeur > list
+        - KeyError si la valeur != str
+        - ValueError la valeur != str
 
     """
 
