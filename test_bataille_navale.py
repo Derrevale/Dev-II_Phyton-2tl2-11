@@ -1,10 +1,13 @@
 import unittest
+
+import mock
+
+import bateau
+import interface
 import joueur
 import tableau
-import bateau
-import mock
-from database_connection import *
 from param_partie import *
+from phase_2_jeu import *
 
 
 class TestBatailleNavale(unittest.TestCase):
@@ -19,7 +22,7 @@ class TestBatailleNavale(unittest.TestCase):
         self.j.score = 9000
 
         self.nbr_bateaux = 3
-        self.bateau1 = bateau.Bateau("porte-avion", 4, "actif")
+        self.bateau1 = bateau.Bateau("porte-avion", 4, "touché")
         self.bateau1.coordonnees_bateau = [1, 1, "o"], [1, 2, "o"], [1, 3, "o"], [1, 4, "o"]
 
         self.bateau2 = bateau.Bateau("torpilleur", 2, "actif")
@@ -177,6 +180,38 @@ class TestBatailleNavale(unittest.TestCase):
         self.assertEqual(verif[0][0], 9000)
         cursor.execute("DELETE from score_joueur where Pseudo_joueur = 'joueurNumero1'")
         connection.commit()
+
+    # TEST phase 2 jeu
+
+    def test_choix_action_refus(self):
+        with mock.patch.object(__builtins__, 'input', lambda _: 'non'):
+            assert choix_action(self.j) == ""
+
+    def test_choix_action_ok(self):
+        with mock.patch.object(__builtins__, 'input', lambda _: 'o'):
+            print(choix_action(self.j))
+            if choix_action(self.j) == "Dommage, vous n'avez rien gagné !":
+                assert choix_action(self.j) == "Dommage, vous n'avez rien gagné !"
+            elif choix_action(self.j) == "Félicitations vous avez gagné le sort suivant : coup horizontal":
+                assert choix_action(self.j) == "Félicitations vous avez gagné le sort suivant : coup horizontal"
+            elif choix_action(self.j) == "Félicitations vous avez gagné le sort suivant : coup vertical":
+                assert choix_action(self.j) == "Félicitations vous avez gagné le sort suivant : coup vertical"
+
+    def test_effectuer_tir(self):
+        effectuer_tir(0, "A", self.j, self.j)
+        self.j.plateau_joueur.tableau[3][4] = "o"
+        effectuer_tir(2, "D", self.j, self.j)
+        self.assertTrue(self.j.plateau_joueur.tableau[1][1] == "X")
+        self.assertTrue(self.j.plateau_joueur.tableau[3][4] == "@")
+        if self.j.plateau_joueur.tableau[3][4] == "@":
+            effectuer_tir(2, "D", self.j, self.j)
+            self.assertTrue(self.j.plateau_joueur.tableau[3][4] == "@")
+
+    # TEST INTERFACE
+
+    def test_interface(self):
+        my_interface = interface.Interface(625, 800)
+        self.assertEqual((my_interface.hauteur, my_interface.largeur), (800, 625))
 
 
 if __name__ == "__main__":

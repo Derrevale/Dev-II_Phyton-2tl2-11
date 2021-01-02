@@ -37,9 +37,6 @@ def effectuer_tir(rangee: int, col: str, adversaire: object, joueur_actuel: obje
     }
     col = coordonnees_plateau[col]
     rangee = rangee + 1
-    print(adversaire.plateau_joueur.tableau[rangee][col] == "o")
-    print(f"rangée {rangee}")
-    print(f"col {col}")
     if adversaire.plateau_joueur.tableau[rangee][col] == "o":
         adversaire.plateau_joueur.tableau[rangee][col] = "@"
         print("Touché")
