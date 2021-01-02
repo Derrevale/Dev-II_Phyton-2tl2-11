@@ -10,6 +10,7 @@ connection = mysql.connector.connect(
 cursor = connection.cursor()
 
 
+
 def envoi_score(joueur1: object, joueur2: object):
     """Methode d'envois du score des joueurs vers Database
 
