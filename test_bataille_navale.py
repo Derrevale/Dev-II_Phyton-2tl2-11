@@ -2,6 +2,7 @@ import unittest
 import joueur
 import tableau
 import bateau
+import mock
 from database_connection import *
 from param_partie import *
 
@@ -145,6 +146,18 @@ class TestBatailleNavale(unittest.TestCase):
 
         self.assertEqual(mon_joueur.nom, "nom_joueur1")
         self.assertEqual(mon_joueur.plateau_joueur.dimension_tableau, 6)
+
+    def test_selection_type_partie(self):
+        with mock.patch.object(__builtins__, 'input', lambda _: 'p'):
+            assert selection_type_partie_console() == 5
+        with mock.patch.object(__builtins__, 'input', lambda _: 'g'):
+            assert selection_type_partie_console() == 10
+        with mock.patch.object(__builtins__, 'input', lambda _: 'test'):
+            assert selection_type_partie_console() == 8
+
+    def test_selection_nom_joueur(self):
+        with mock.patch.object(__builtins__, 'input', lambda _: 'jesuisjoueur'):
+            assert nom_de_joueur(1) == "jesuisjoueur"
 
     # TEST database_connection
 
