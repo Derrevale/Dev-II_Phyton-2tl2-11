@@ -7,13 +7,21 @@ from phase_1_position_bateau import *
 
 
 def effectuer_tir(rangee: int, col: str, adversaire: object, joueur_actuel: object):
-    """
-    fonction servant a effectuer un tir sur le tableau adverse
-    :param joueur_actuel:
-    :param rangee: numero de la ligne
-    :param col: numero de la colonne
-    :param adversaire: objet Joueur correspond a l'adversaire
-    :return:
+    """ Fonction servant a effectuer un tir sur le tableau adverse
+    PRE :
+        - rangee = int
+        - col = str
+        - aversaire = objet de classe Joueur
+        - joueur_actuel =objet de classe Joueur
+    POST :
+        - col = coordonnees_plateau[col]
+        - rangee = rangee + 1
+        - adversaire.plateau_joueur.tableau[rangee][col] = "@" si adversaire.plateau_joueur.tableau[rangee][col] = "o"
+        - print("Touché") si adversaire.plateau_joueur.tableau[rangee][col] = "@"
+        - joueur_actuel +50 et adversaire-50 si adversaire.plateau_joueur.tableau[rangee][col] = "o"
+        - print("Raté!") si adversaire.plateau_joueur.tableau[rangee][col] != "o" ou != "@"
+        - adversaire.plateau_joueur.tableau[X][Y] = "X" si adversaire.plateau_joueur.tableau[X][Y] != "o" ou != "@"
+        - adversaire + 25 si adversaire.plateau_joueur.tableau[X][Y] != "o" ou != "@"
     """
     coordonnees_plateau = {
         "A": 1,
@@ -46,10 +54,13 @@ def effectuer_tir(rangee: int, col: str, adversaire: object, joueur_actuel: obje
 
 
 def choix_action(joueur_actu: object):
-    """
-    fonction servant a effectuer un choix qui permet au joueur de faire une roulette
-    :param joueur_actu: objet Joueur correspondant au joueur dont c'est le tour de jeu
-    :return: resultat_roulette
+    """ Fonction servant a effectuer un choix qui permet au joueur de faire une roulette
+    PRE : -joueur_actu = objet de classe Joueur
+    POST :
+        - choix_roulette = input() si joueur_actu.portefeuille_joueur >=150
+        - joueur_actu.portefeuille_joueur et joueur_actu - 150 si choix_roulette = "o"
+        - resultat_roulette = random(roulette) si joueur_actu.portefeuille_joueur >=150
+        - retourne resultat_roulette
     """
     roulette = ["coup vertical", "coup horizontal", "rien", "rien"]
     resultat_roulette = ""
@@ -72,11 +83,20 @@ def choix_action(joueur_actu: object):
 
 
 def coup_special(joueur_actu: object, plateau: list):
-    """
-    Fonction permettant d'executer le coup spécial obtenu à partir de la fonction précédente choix_action()
-    :param joueur_actu: Object joueur correspondant au joueur actuel dont c'est le tour de jeu
-    :param plateau: Objet plateau réprésentant le plateau de jeu du joueur adverse
-    :return:
+    """ Fonction permettant d'executer le coup spécial obtenu à partir de la fonction précédente choix_action()
+    PRE :
+        - joueur_actu = objet de classe Joueur
+        - plateau = list
+    POST :
+        - si choix_action = "rien" ou "" fin de la fonction
+        - col = input si choix_action = "coup horizontal" ou "coup vertical"
+        - rangee = input si choix_action = "coup horizontal" ou "coup vertical"
+        - boucle sur elements quand elements = 0-3
+        - si plateau[X][Y + elements] == "o" alors plateau[X][Y + elements] = "@"sinon plateau[X][Y + elements] = "x"
+            quand choix = "coup horizontal"
+        - si plateau[X + elements][Y] == "o" alors plateau[X + elements][Y] = "@"sinon plateau[X + elements][Y] = "x"
+            quand choix = "coup vertical"
+
     """
     coordonnees_plateau = {
         "A": 1,
@@ -120,11 +140,16 @@ def coup_special(joueur_actu: object, plateau: list):
 
 
 def plateau_invisible_adversaire(plateau_invisible: list, plateau_a_copier: list):
-    """
-    fonction servant a copier un tableau possédant des bateaux afin que le joueur adverse tir sur un tableau sans bateau
-    :param plateau_invisible: liste vide
-    :param plateau_a_copier: liste du tableau d'un objet Tableau correspondant au tableau du joueur actuel
-    :return: affiche le tableau sans les bateaux
+    """ Fonction servant a copier un tableau possédant des bateaux afin que le joueur adverse tir sur un tableau
+        sans bateau
+    PRE :
+        - plateau_invisible = list vide
+        - plateau_a_copier = list remplie
+
+    POST :
+        - plateau_invisible = deepcopy plateau_a_copier
+        - plateau_invisible[elements][ele] = "~" quand plateau_invisible[elements][ele] = "o"
+        - affiche tableau_invisible
     """
     plateau_invisible = copy.deepcopy(plateau_a_copier)
     for elements in range(len(plateau_invisible)):
@@ -136,14 +161,19 @@ def plateau_invisible_adversaire(plateau_invisible: list, plateau_a_copier: list
 
 
 def tour_de_jeu(joueur_actuel: object, adversaire: object, plateau_invisible: list):
-    """
-    fonction définissant un tour de jeu d'un joueur
-    :param joueur_actuel: objet Joueur correspondant au joueur actuel
-    :param adversaire: objet Joueur correspondant au joueur adverse
-    :param plateau_invisible: list d'un plateau assossier au joueur actuel sans bateau
-    :return:
-    :raises: KeyError si la valeur n'est pas correcte
-    :raises: ValueError si la valeur n'est pas dans le type adequa
+    """ Fonction définissant un tour de jeu d'un joueur
+    PRE :
+        - joueur_actuel = objet de classe Joueur
+        - adversaire = objet de classe Joueur
+        - plateau_invisible = list
+    POST :
+        - appel fonction plateau_invisible_adversaire
+        - appel fonction coup_special
+        - choix_col_joueur et choix_rangee_joueur = input
+        - appel fonction effectuer_tir
+    RAISE:
+        - KeyError si la valeur n'est pas correcte
+        - ValueError si la valeur n'est pas dans le type adequa
     """
     while True:
         try:
@@ -169,11 +199,14 @@ def tour_de_jeu(joueur_actuel: object, adversaire: object, plateau_invisible: li
 
 
 def verif_bateau(joueur_actuel: object, *arg):
-    """
-    fonction servant a verifier l'états d'un bateau et de modifier l'objet Bateau en fonction des tirs reussi
-    :param joueur_actuel: objet Joueur correspondant au joueur dont c'est le tour
-    :param arg: objet Bateau contenant une liste avec ses positions , son nom et sa taille
-    :return:
+    """ Fonction servant a verifier l'états d'un bateau et de modifier l'objet Bateau en fonction des tirs reussi
+    PRE :
+        - joueur_actuel = objet de classe Joueur
+        - *arg = objet de classe Bateau
+    POST :
+        - boucle chaque bateau dans les arguments
+        - si nom_du_bateau.coordonnees_bateau[elements][2] == "@" alors bateau.etat_bat = "touché" et counter.append @
+        - quand len(counter) == nom_bateau.taille_bateau alors  bateau.etat_bat = "inactif" et joueur_actuel + 300
     """
     for nom_du_bateau in arg:
         counter = []
@@ -197,12 +230,16 @@ def verif_bateau(joueur_actuel: object, *arg):
 
 
 def rafraichir_position(adversaire: object, *arg):
-    """
-    fonction servant a modifier le tableau invisible afin de voir les tirs et les resultats sur un tableau et a ensuite
-    l'afficher
-    :param adversaire: objet Joueur correspondant a l'adversaire
-    :param arg: objet Bateau possede par le joueur adverse
-    :return:
+    """ Fonction servant a modifier le tableau invisible afin de voir les tirs et les resultats sur un tableau et a
+    ensuite l'afficher
+    PRE :
+        - adversaire = objet de classe Joueur
+        - *arg = objet de classe Bateau
+    POST :
+        - boucle sur chaque bateau dans les arguments
+        - col = nom_du_bateau.coordonnees_bateau[elements][1]
+        - rangee = nom_du_bateau.coordonnees_bateau[elements][0]
+        - si adversaire.plateau_joueur.tableau[X][Y] == "@" alors nom_du_bateau.coordonnees_bateau[elements][2] = "@"
     """
     for nom_du_bateau in arg:
         for elements in range(nom_du_bateau.taille_bateau):
@@ -213,11 +250,25 @@ def rafraichir_position(adversaire: object, *arg):
 
 
 def verif_win(joueur: object, number_of_ship: int):
-    """
-    fonction servant a verifie l'etats des bateaux
-    :param joueur: objet Joueur
-    :param number_of_ship: integer correspondant au nombre de bateaux dans la partie
-    :return: true si les bateaux sont a l'etats inactifs
+    """ Fonction servant a verifie l'etats des bateaux
+    PRE :
+        - joueur = objet de classe Joueur
+        - number_of_ship = int 1 / 3 / 5
+    POST :
+        - return True   si joueur.porte_avion.etat_bat == "inactif"
+                        and joueur.torpilleur.etat_bat == "inactif"
+                        and joueur.croiseur.etat_bat == "inactif"
+                        quand number_of_ship == 3
+
+        -return True   si joueur.porte_avion.etat_bat == "inactif"
+                        quand number_of_ship == 1
+
+        -return True   si joueur.porte_avion.etat_bat == "inactif"
+                        and joueur.torpilleur.etat_bat == "inactif"
+                        and joueur.croiseur.etat_bat == "inactif"
+                        and joueur.canonniere.etat_bat == "inactif"
+                        and joueur.destroyer.etat_bat == "inactif":
+                        quand number_of_ship == 5
     """
     if number_of_ship == 3:
         if joueur.porte_avion.etat_bat == "inactif" and joueur.torpilleur.etat_bat == "inactif" and joueur.croiseur.etat_bat == "inactif":
@@ -234,14 +285,19 @@ def verif_win(joueur: object, number_of_ship: int):
 def lancement_partie(joueur1: object, joueur2: object,
                      tableau_invisible_joueur1: list, tableau_invisible_joueur2: list,
                      number_of_ships: int):
-    """
-    fonction servant initialiser et a jouer une partie qui changera en fonction du nombre de bateau
-    :param joueur1: objet Joueur correspondant au premier joueur
-    :param joueur2: objet Joueur correspondant a son adversaire
-    :param tableau_invisible_joueur1: liste correpondant au tableau sur lesquel le joueur 1 vas tirer
-    :param tableau_invisible_joueur2: liste correpondant au tableau sur lesquel le joueur 2 vas tirer
-    :param number_of_ships: integer représentant le nombre de bateau lors de cette partie
-    :return:
+    """ Fonction servant initialiser et a jouer une partie qui changera en fonction du nombre de bateau
+    PRE :
+        - joueur1 = objet de classe Joueur
+        - joueur2 = objet de classe Joueur
+        - tableau_invisible_joueur1 = list
+        - tableau_invisible_joueur2 = list
+        - number_of_ship = int 1 / 3 / 5
+    POST :
+        - appel fonction positionner_bateau
+        - si number_of_ship == 3 appel fonction petite_partie
+        - si number_of_ship == 1 appel fonction test_partie
+        - si number_of_ship == 5 appel fonction grande_partie
+        - si l'appel de la fonction verif_win renvoie True alors fin de partie print("victoire joueurX")
     """
     # Victoire devient True quand un joueur détruit tout les bateaux adverse
     victoire = False
@@ -281,13 +337,17 @@ def petite_partie(joueur1: object,
                   joueur2: object,
                   tableau_invisible_joueur1: list, tableau_invisible_joueur2: list
                   ):
-    """
-    fonction correspondant a un tout de jeu complet avec 3 bateaux
-    :param joueur1: objet Joueur correspondant au premier joueur
-    :param joueur2: objet Joueur correspondant a son adversaire
-    :param tableau_invisible_joueur1: liste correpondant au tableau sur lesquel le joueur 1 vas tirer
-    :param tableau_invisible_joueur2: liste correpondant au tableau sur lesquel le joueur 2 vas tirer
-    :return:
+    """ Fonction correspondant a un tour de jeu complet avec 3 bateaux
+    PRE :
+        - joueur1 = objet de classe Joueur
+        - joueur2 = objet de classe Joueur
+        - tableau_invisible_joueur1 = list
+        - tableau_invisible_joueur2 = list
+    POST :
+        - appel fonction tour_de_jeu
+        - appel fonction rafraichir_position
+        - appel fonction verif_bateau
+
     """
     print("plateau du joueur 2 : \n")
 
@@ -306,13 +366,16 @@ def petite_partie(joueur1: object,
 def grande_partie(joueur1: object, joueur2: object,
                   tableau_invisible_joueur1: list, tableau_invisible_joueur2: list,
                   ):
-    """
-
-    fonction correspondant a un tout de jeu complet avec 5 bateaux
-    :param joueur1: objet Joueur correspondant au premier joueur
-    :param joueur2: objet Joueur correspondant a son adversaire
-    :param tableau_invisible_joueur1: liste correpondant au tableau sur lesquel le joueur 1 vas tirer
-    :param tableau_invisible_joueur2: liste correpondant au tableau sur lesquel le joueur 2 vas tirer
+    """ Fonction correspondant a un tout de jeu complet avec 5 bateaux
+    :PRE :
+        - joueur1 = objet de classe Joueur
+        - joueur2 = objet de classe Joueur
+        - tableau_invisible_joueur1 = list
+        - tableau_invisible_joueur2 = list
+    POST :
+        - appel fonction tour_de_jeu
+        - appel fonction rafraichir_position
+        - appel fonction verif_bateau
     """
     print("plateau du joueur 2 : \n")
 
@@ -336,13 +399,16 @@ def test_partie(joueur1: object,
                 joueur2: object,
                 tableau_invisible_joueur1: list, tableau_invisible_joueur2: list
                 ):
-    """
-    fonction correspondant a un tout de jeu complet avec 3 bateaux
-    :param joueur1: objet Joueur correspondant au premier joueur
-    :param joueur2: objet Joueur correspondant a son adversaire
-    :param tableau_invisible_joueur1: liste correpondant au tableau sur lesquel le joueur 1 vas tirer
-    :param tableau_invisible_joueur2: liste correpondant au tableau sur lesquel le joueur 2 vas tirer
-    :return:
+    """ Fonction correspondant a un tout de jeu complet avec 1 bateaux
+    PRE :
+        - joueur1 = objet de classe Joueur
+        - joueur2 = objet de classe Joueur
+        - tableau_invisible_joueur1 = list
+        - tableau_invisible_joueur2 = list
+    POST :
+        - appel fonction tour_de_jeu
+        - appel fonction rafraichir_position
+        - appel fonction verif_bateau
     """
     print("plateau du joueur 2 : \n")
 

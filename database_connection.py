@@ -14,8 +14,8 @@ def envoi_score(joueur1: object, joueur2: object):
     """Methode d'envois du score des joueurs vers Database
 
     PRE :
-        - joueur1 = objet JOUEUR
-        - joueur2 = objet JOUEUR
+        - joueur1 = objet de classe JOUEUR
+        - joueur2 = objet de classe JOUEUR
     POST :
         - mon_insertion = connection DB
         - mon_insertion.execute = "INSERT INTO score_joueur (Score_Partie,Pseudo_joueur) VALUES (%s,%s)
@@ -35,8 +35,8 @@ def afficher_score(joueur1: object, joueur2: object):
     """Methode qui récupère les scores dans la DB ,trie les scores et les affiches
 
     PRE :
-        - joueur1 = objet Joueur
-        - joueur2 = objet Joueur
+        - joueur1 = objet de classe Joueur
+        - joueur2 = objet de classe Joueur
     POST :
         - cursor.execute("SELECT Score_Partie,Pseudo_joueur from score_joueur order by Score_Partie DESC")
         - tableau_score = cursor.fetchall

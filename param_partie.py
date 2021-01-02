@@ -84,7 +84,7 @@ def creation_tableau_joueur(dimension: int, nom_joueur: str):
         - création objet plateau_joueur de classe Tableau(dimension)
         - creation d'un tableau dans l'objet plateau_joueur
         - creation d'un objet Joueur possedant un nom et un objet Tableau
-        - retourne l'objet Joueur
+        - retourne l'objet de classe Joueur
     """
     plateau_joueur = Tableau(dimension)
     plateau_joueur.creation_tableau()
@@ -96,15 +96,15 @@ def joueur_auto():
 
     PRE : -
     POST :
-        - joueur1 = objet Joueur(plateau_joueur(6 * 6) nom_joueur = "nom_joueur1")
-        - porte_avion = objet Bateau(nom_bateau = "porte_avion" taille = 4)
-        - croiseur = objet Bateau(nom_bateau = "croiseur" taille = 2)
-        - torpilleur = objet Bateau(nom_bateau = "torpilleur" taille = 2)
+        - joueur1 = objet de classe Joueur(plateau_joueur(6 * 6) nom_joueur = "nom_joueur1")
+        - porte_avion = objet de classe Bateau(nom_bateau = "porte_avion" taille = 4)
+        - croiseur = objet de classe Bateau(nom_bateau = "croiseur" taille = 2)
+        - torpilleur = objet de classe Bateau(nom_bateau = "torpilleur" taille = 2)
         - appel fonction position_bateau pour porte_avion,torpilleur,croiseur
-        - joueur1.porte_avion = objet Bateau porte_avion
-        - joueur1.torpilleur = objet Bateau torpilleur
-        - joueur1.croiseur = objet Bateau croiseur
-        - retourne objet Joueur joueur1
+        - joueur1.porte_avion = objet de classe Bateau porte_avion
+        - joueur1.torpilleur = objet de classe Bateau torpilleur
+        - joueur1.croiseur = objet de classe Bateau croiseur
+        - retourne objet de classe Joueur joueur1
     """
     joueur1 = creation_tableau_joueur(6, "nom_joueur1")
     porte_avion = Bateau("porte_avion", 4)

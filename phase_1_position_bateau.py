@@ -13,7 +13,7 @@ def afficher_tableau(tableau: list):
 def positionner_bateau(joueur: object, number_of_ships: int):
     """ Fonction permettant au joueur de placer ses bateaux
     PRE :
-        - joueur = objet Joueur
+        - joueur = objet de classe Joueur
         - number_of_ships = integer
     POST :
         - appel afficher_tableau(joueur.plateau_joueur.tableau)

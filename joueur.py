@@ -29,7 +29,7 @@ class Joueur:
         """Surcharge de l'operateur + pour Joueur
 
         PRE :
-            self = objet Fraction
+            self = objet de classe Joueur
             other = integer
          POST : self.score + other
         """
@@ -39,7 +39,7 @@ class Joueur:
         """Surcharge de l'operateur - pour Joueur
 
         PRE :
-            - self = objet Fraction
+            - self = objet de classe Joueur
             - other = integer
         POST : self.score - other
         """
