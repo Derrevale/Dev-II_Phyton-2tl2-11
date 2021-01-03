@@ -189,7 +189,6 @@ class TestBatailleNavale(unittest.TestCase):
 
     def test_choix_action_ok(self):
         with mock.patch.object(__builtins__, 'input', lambda _: 'o'):
-            print(choix_action(self.j))
             if choix_action(self.j) == "Dommage, vous n'avez rien gagné !":
                 assert choix_action(self.j) == "Dommage, vous n'avez rien gagné !"
             elif choix_action(self.j) == "Félicitations vous avez gagné le sort suivant : coup horizontal":
