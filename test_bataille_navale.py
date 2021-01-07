@@ -206,6 +206,14 @@ class TestBatailleNavale(unittest.TestCase):
             effectuer_tir(2, "D", self.j, self.j)
             self.assertTrue(self.j.plateau_joueur.tableau[3][4] == "@")
 
+    def test_effectuer_tir_error_index(self):
+        with self.assertRaises(IndexError):
+            effectuer_tir(99, "A", self.j, self.j)
+
+    def test_effectuer_tir_error_key(self):
+        with self.assertRaises(KeyError):
+            effectuer_tir(1, "Z", self.j, self.j)
+
     # TEST INTERFACE
 
     def test_interface(self):

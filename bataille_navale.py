@@ -1,5 +1,4 @@
 # Importation des fonction depuis phase_2_jeu.py
-from phase_2_jeu import *
 from interface import *
 from param_partie import *
 # Importation permettant de récuperer les arguments utilisé lors de l'appel du code
