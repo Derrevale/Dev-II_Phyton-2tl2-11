@@ -1,14 +1,12 @@
-# Importation des fonctions depuis action.py
-from action import *
+# Importation des fonction depuis phase_2_jeu.py
 from interface import *
-
+from param_partie import *
 # Importation permettant de récuperer les arguments utilisé lors de l'appel du code
 import sys
 
-
 # Initialisation des valeur par défaut
-partie_finie = False
-partie_gagnee = False
+
+
 tour_joueur = 0
 type_de_partie = "console"
 
@@ -22,8 +20,7 @@ if __name__ == '__main__':
     argument = sys.argv[1]
 
     if argument == "console":
-    # Partie en mode console
-        print("On démarre en mode console")
+        # Partie en mode console
         # Attribution du style de bataille (nombre de colonne et de ligne)
         dimension_tableau = selection_type_partie_console()
 
@@ -41,14 +38,12 @@ if __name__ == '__main__':
         joueur1 = creation_tableau_joueur(dimension_tableau, nom_joueur1)
         joueur2 = creation_tableau_joueur(dimension_tableau, nom_joueur2)
 
-        debut_partie(joueur1,joueur2,tableau_invisible_joueur1,tableau_invisible_joueur2,nombre_bateau)
+        lancement_partie(joueur1, joueur2, tableau_invisible_joueur1, tableau_invisible_joueur2, nombre_bateau)
 
     elif argument == "gui":
-    # Partie en mode GUI
-        print("On démarre en mode gui")
-        interface_jeu = Interface(1280,800)
+        # Partie en mode GUI
+
+        interface_jeu = Interface(625, 800)
         interface_jeu.lancement_jeu()
     else:
         print("Mode de jeu inconnu.\nPrécisez une un mode de jeu en paramètre\nconsole/gui")
-
-    print("script par défaut")
