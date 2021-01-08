@@ -25,6 +25,7 @@ def selection_type_partie_console():
     grande_bat = "G"
     test_bat = "TEST"
     lancement = False
+    nombre_ligne_colonne = 5
     style_partie = input(
         "Choisisez le style de partie que vous voulez jouez."
         "\nGrande Bataille (10*10 , 5 Bateaux)"

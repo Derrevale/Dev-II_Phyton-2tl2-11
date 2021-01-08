@@ -176,7 +176,6 @@ class Interface:
                                     joueur_auto.plateau_joueur.tableau[rang][col] == "@":
                                 pass
                             else:
-                                print("TIR")
                                 if joueur_auto.plateau_joueur.tableau[rang][col] == "o":
                                     joueur_auto.plateau_joueur.tableau[rang][col] = "@"
                                     image_feu = pygame.image.load("Images/fire.png")
@@ -184,7 +183,6 @@ class Interface:
                                     screen.blit(image_feu, (emplacement_colonne - 10, emplacement_rangee - 10))
                                 else:
                                     joueur_auto.plateau_joueur.tableau[rang][col] = "x"
-                                    print(joueur_auto.plateau_joueur.tableau)
                                     image_target_x = pygame.image.load("Images/close.png")
                                     image_target_x = pygame.transform.scale(image_target_x, (20, 20))
                                     screen.blit(image_target_x, (emplacement_colonne - 10, emplacement_rangee - 10))
